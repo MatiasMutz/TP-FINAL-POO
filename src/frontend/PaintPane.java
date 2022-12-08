@@ -195,6 +195,7 @@ public class PaintPane extends BorderPane {
 					(Math.pow(eventPoint.getY() - ellipse.getCenterPoint().getY(), 2) / Math.pow(ellipse.getsMinorAxis(), 2))) <= 0.30;
 		}
 		return found;
+		
 	}
 
 }
