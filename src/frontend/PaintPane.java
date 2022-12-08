@@ -34,6 +34,8 @@ public class PaintPane extends BorderPane {
 	SpecialButton ellipseButton = new EllipseButton("Elipse");
 	SpecialButton deleteButton = new SpecialButton("Borrar");
 
+	SpecialButton copyFormatButton = new SpecialButton("Cop. Form.");
+
 	Label sliderLabel = new Label("Borde");
 	Label fillLabel = new Label("Relleno");
 	Slider slider = new Slider(1, 50, 1);
@@ -55,7 +57,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
+		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton, copyFormatButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
