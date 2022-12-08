@@ -69,6 +69,8 @@ public class PaintPane extends BorderPane {
 			if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
 				return ;
 			}
+
+
 			Figure newFigure = null;
 			if(rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
@@ -96,6 +98,7 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
+			//Hacer funcion1
 			for(Figure figure : canvasState.figures()) {
 				if(figureBelongs(figure, eventPoint)) {
 					found = true;
@@ -106,7 +109,7 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(label.toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
-			}
+			}//hasta aca
 		});
 
 		canvas.setOnMouseClicked(event -> {
@@ -114,6 +117,7 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				//Hacer funcion1
 				for (Figure figure : canvasState.figures()) {
 					if(figureBelongs(figure, eventPoint)) {
 						found = true;
@@ -126,7 +130,7 @@ public class PaintPane extends BorderPane {
 				} else {
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
-				}
+				} //hasta aca
 				redrawCanvas();
 			}
 		});
@@ -136,27 +140,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(selectedFigure instanceof Rectangle) {
-					Rectangle rectangle = (Rectangle) selectedFigure;
-					rectangle.getTopLeft().moveX(diffX);
-					rectangle.getBottomRight().moveX(diffX);
-					rectangle.getTopLeft().moveY(diffY);
-					rectangle.getBottomRight().moveY(diffY);
-				} else if(selectedFigure instanceof Circle) {
-					Circle circle = (Circle) selectedFigure;
-					circle.getCenterPoint().moveX(diffX);
-					circle.getCenterPoint().moveY(diffY);
-				} else if(selectedFigure instanceof Square) {
-					Square square = (Square) selectedFigure;
-					square.getTopLeft().moveX(diffX);
-					square.getBottomRight().moveX(diffX);
-					square.getTopLeft().moveY(diffY);
-					square.getBottomRight().moveY(diffY);
-				} else if(selectedFigure instanceof Ellipse) {
-					Ellipse ellipse = (Ellipse) selectedFigure;
-					ellipse.getCenterPoint().moveX(diffX);
-					ellipse.getCenterPoint().moveY(diffY);
-				}
+
+				selectedFigure.moveX(diffX);
+				selectedFigure.moveY(diffY);
+				
 				redrawCanvas();
 			}
 		});

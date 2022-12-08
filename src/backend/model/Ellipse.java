@@ -15,7 +15,14 @@ public class Ellipse implements Figure {
     public String toString() {
         return String.format("Elipse [Centro: %s, DMayor: %.2f, DMenor: %.2f]", centerPoint, sMayorAxis, sMinorAxis);
     }
-
+    @Override
+    public void moveX(double distance){
+        centerPoint.moveX(distance);
+    }
+    @Override
+    public void moveY(double distance){
+        centerPoint.moveY(distance);
+    }
     public Point getCenterPoint() {
         return centerPoint;
     }

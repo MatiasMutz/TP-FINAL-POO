@@ -8,7 +8,16 @@ public class Rectangle implements Figure {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
-
+    @Override
+    public void moveX(double distance){
+        topLeft.moveX(distance);
+        bottomRight.moveX(distance);
+    }
+    @Override
+    public void moveY(double distance){
+        topLeft.moveY(distance);
+        bottomRight.moveY(distance);
+    }
     public Point getTopLeft() {
         return topLeft;
     }
