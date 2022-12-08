@@ -24,7 +24,6 @@ public class PaintPane extends BorderPane {
 	Canvas canvas = new Canvas(800, 600);
 	GraphicsContext gc = canvas.getGraphicsContext2D();
 	Color lineColor = Color.BLACK;
-	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
 	SpecialButton selectionButton = new SpecialButton("Seleccionar");
@@ -33,8 +32,6 @@ public class PaintPane extends BorderPane {
 	SpecialButton squareButton = new SquareButton("Cuadrado");
 	SpecialButton ellipseButton = new EllipseButton("Elipse");
 	SpecialButton deleteButton = new SpecialButton("Borrar");
-
-	SpecialButton copyFormatButton = new SpecialButton("Cop. Form.");
 
 	Label sliderLabel = new Label("Borde");
 	Label fillLabel = new Label("Relleno");
@@ -57,7 +54,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton, copyFormatButton};
+		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -171,9 +168,9 @@ public class PaintPane extends BorderPane {
 			if(figure == selectedFigure) {
 				gc.setStroke(Color.RED);
 			} else {
-				gc.setStroke(lineColor);
+				gc.setStroke(borderColorPicker.getValue());
 			}
-			gc.setFill(fillColor);
+			gc.setFill(fillColorPicker.getValue());
 			figure.redrawCanvas(gc);
 
 		}
