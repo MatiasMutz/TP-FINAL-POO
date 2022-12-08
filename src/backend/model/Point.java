@@ -2,13 +2,18 @@ package backend.model;
 
 public class Point {
 
-    public double x, y;
+    private double x, y;
 
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }
-
+    public void moveX(double distance){
+        x+=distance;
+    }
+    public void moveY(double distance){
+        y+=distance;
+    }
     public double getX() {
         return x;
     }

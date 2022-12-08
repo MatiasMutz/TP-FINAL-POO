@@ -80,9 +80,9 @@ public class PaintPane extends BorderPane {
 				double size = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Square(startPoint, size);
 			} else if(ellipseButton.isSelected()) {
-				Point centerPoint = new Point(Math.abs(endPoint.x + startPoint.x) / 2, (Math.abs((endPoint.y + startPoint.y)) / 2));
-				double sMayorAxis = Math.abs(endPoint.x - startPoint.x);
-				double sMinorAxis = Math.abs(endPoint.y - startPoint.y);
+				Point centerPoint = new Point(Math.abs(endPoint.getX() + startPoint.getX()) / 2, (Math.abs((endPoint.getY() + startPoint.getY())) / 2));
+				double sMayorAxis = Math.abs(endPoint.getX() - startPoint.getX());
+				double sMinorAxis = Math.abs(endPoint.getY() - startPoint.getY());
 				newFigure = new Ellipse(centerPoint, sMayorAxis, sMinorAxis);
 			} else {
 				return ;
@@ -138,24 +138,24 @@ public class PaintPane extends BorderPane {
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 				if(selectedFigure instanceof Rectangle) {
 					Rectangle rectangle = (Rectangle) selectedFigure;
-					rectangle.getTopLeft().x += diffX;
-					rectangle.getBottomRight().x += diffX;
-					rectangle.getTopLeft().y += diffY;
-					rectangle.getBottomRight().y += diffY;
+					rectangle.getTopLeft().moveX(diffX);
+					rectangle.getBottomRight().moveX(diffX);
+					rectangle.getTopLeft().moveY(diffY);
+					rectangle.getBottomRight().moveY(diffY);
 				} else if(selectedFigure instanceof Circle) {
 					Circle circle = (Circle) selectedFigure;
-					circle.getCenterPoint().x += diffX;
-					circle.getCenterPoint().y += diffY;
+					circle.getCenterPoint().moveX(diffX);
+					circle.getCenterPoint().moveY(diffY);
 				} else if(selectedFigure instanceof Square) {
 					Square square = (Square) selectedFigure;
-					square.getTopLeft().x += diffX;
-					square.getBottomRight().x += diffX;
-					square.getTopLeft().y += diffY;
-					square.getBottomRight().y += diffY;
+					square.getTopLeft().moveX(diffX);
+					square.getBottomRight().moveX(diffX);
+					square.getTopLeft().moveY(diffY);
+					square.getBottomRight().moveY(diffY);
 				} else if(selectedFigure instanceof Ellipse) {
 					Ellipse ellipse = (Ellipse) selectedFigure;
-					ellipse.getCenterPoint().x += diffX;
-					ellipse.getCenterPoint().y += diffY;
+					ellipse.getCenterPoint().moveX(diffX);
+					ellipse.getCenterPoint().moveY(diffY);
 				}
 				redrawCanvas();
 			}
