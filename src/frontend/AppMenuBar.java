@@ -1,5 +1,6 @@
 package frontend;
 
+import javafx.application.Platform;
 import javafx.scene.control.*;
 
 import java.util.Optional;
@@ -14,12 +15,9 @@ public class AppMenuBar extends MenuBar {
             alert.setTitle("Salir");
             alert.setHeaderText("Salir de la aplicación");
             alert.setContentText("¿Está seguro que desea salir de la aplicación?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent()) {
-                if (result.get() == ButtonType.OK) {
-                    System.exit(0);
-                }
-            }
+            alert.showAndWait()
+                    .filter(btnType -> btnType.equals(ButtonType.OK))
+                    .ifPresent(btnType -> Platform.exit());
         });
         file.getItems().add(exitMenuItem);
         Menu help = new Menu("Ayuda");

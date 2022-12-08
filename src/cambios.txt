@@ -12,3 +12,7 @@ En Point convertimos x,y en private y agregamos las clases de moveX y moveY para
 
 En PaintPane, al realizar los cambios en Point dejaba de funcionar pues x,y ya no eran public,
 entonces para mover los puntos, utilizamos los metodos moveX, moveY
+
+En AppMenuBar cambiamos el metodo showAndWait. Ahora utilizamos primero aplicamos el metodo filter
+para que en el caso de que la respuesta obtenida haya sido un OK, entonces que se ejecute el
+Platform.exit para salir de la aplicacion.
