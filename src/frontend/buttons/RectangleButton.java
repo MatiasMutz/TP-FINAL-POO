@@ -1,6 +1,7 @@
 package frontend.buttons;
 
 import backend.model.Figure;
+import backend.model.Format;
 import backend.model.Point;
 import backend.model.Rectangle;
 import javafx.scene.control.ToggleButton;
@@ -11,7 +12,7 @@ public class RectangleButton extends SpecialButton{
     }
 
     @Override
-    public Figure newFigure(Point startPoint, Point endPoint){
-        return new Rectangle(startPoint, endPoint);
+    public Figure newFigure(Point startPoint, Point endPoint, Format format){
+        return new Rectangle(startPoint, endPoint,format);
     }
 }

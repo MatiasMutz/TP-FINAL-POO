@@ -1,9 +1,9 @@
 package backend.model;
 
-public class Circle extends Ellipse implements Figure {
+public class Circle extends Ellipse {
 
-    public Circle(Point centerPoint, double radius) {
-        super(centerPoint, radius*2, radius*2);
+    public Circle(Point centerPoint, double radius,Format format) {
+        super(centerPoint, radius*2, radius*2,format);
     }
 
     @Override

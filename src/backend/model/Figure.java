@@ -2,13 +2,29 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public interface Figure {
-     void moveX(double distance);
-     void moveY(double distance);
+public abstract class Figure {
 
-     void redrawCanvas(GraphicsContext gc);
+     private Format format;
 
-     boolean figureBelongs(Point eventPoint);
+     public Figure(Format format){
+          setFormat(format);
+     }
+     public void setFormat(Format format) {
+          this.format = format;
+     }
+
+     public Format getFormat(){
+          return format;
+     }
+
+     public abstract void moveX(double distance);
+     public abstract void moveY(double distance);
+
+     public abstract void redrawCanvas(GraphicsContext gc);
+
+     public abstract boolean figureBelongs(Point eventPoint);
+
+
 
 
 }

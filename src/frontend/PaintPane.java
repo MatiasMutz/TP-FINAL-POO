@@ -42,7 +42,7 @@ public class PaintPane extends BorderPane {
 	final ColorPicker fillColorPicker = new ColorPicker(Color.GREEN);
 	final Label coloredText = new Label("Colors");
 
-
+	private Format copyFormat=null, newFormat=null;
 
 	// Dibujar una figura
 	Point startPoint;
@@ -72,7 +72,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
-		gc.setLineWidth(1);
+		gc.setLineWidth(50);
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
@@ -87,7 +87,7 @@ public class PaintPane extends BorderPane {
 			Figure newFigure = null;
 			for(SpecialButton button: toolsArr){
 				if(button.isSelected()){
-					newFigure=button.newFigure(startPoint,endPoint);
+					newFigure=button.newFigure(startPoint,endPoint,new Format(fillColorPicker.getValue(),borderColorPicker.getValue(),slider.getValue()));
 					if(newFigure!=null){
 						canvasState.addFigure(newFigure);
 						startPoint = null;
@@ -124,6 +124,10 @@ public class PaintPane extends BorderPane {
 					if(figureBelongs(figure, eventPoint)) {
 						found = true;
 						selectedFigure = figure;
+						if(copyFormat!=null){
+							selectedFigure.setFormat(copyFormat);
+							copyFormat=null;
+						}
 						label.append(figure.toString());
 					}
 				}
@@ -160,8 +164,29 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+
+		copyFormatButton.setOnAction(event->{
+			if (selectedFigure!=null){
+				copyFormat=new Format(selectedFigure.getFormat());
+			}
+
+		});
+
+		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
+		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
+		slider.setOnTouchReleased(event->updateSelectedFormat(selectedFigure));
+
+
+
 		setLeft(buttonsBox);
 		setRight(canvas);
+	}
+
+	private void updateSelectedFormat(Figure selectedFigure){
+		if(selectedFigure!=null){
+			selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
+		}
+		redrawCanvas();
 	}
 
 	void redrawCanvas() {
@@ -169,10 +194,12 @@ public class PaintPane extends BorderPane {
 		for(Figure figure : canvasState.figures()) {
 			if(figure == selectedFigure) {
 				gc.setStroke(Color.RED);
-			} else {
-				gc.setStroke(borderColorPicker.getValue());
 			}
-			gc.setFill(fillColorPicker.getValue());
+			else {
+				gc.setStroke(figure.getFormat().getBorderColor());
+			}
+			gc.setFill(figure.getFormat().getFillColor());
+			gc.setLineWidth(figure.getFormat().getBorderWidth());
 			figure.redrawCanvas(gc);
 
 		}
