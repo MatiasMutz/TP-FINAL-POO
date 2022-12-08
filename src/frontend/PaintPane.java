@@ -7,11 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.awt.event.MouseEvent;
 
@@ -32,8 +32,16 @@ public class PaintPane extends BorderPane {
 	SpecialButton circleButton = new CircleButton("Círculo");
 	SpecialButton squareButton = new SquareButton("Cuadrado");
 	SpecialButton ellipseButton = new EllipseButton("Elipse");
-	SpecialButton deleteButton = new SpecialButton("Borrar") {
-	};
+	SpecialButton deleteButton = new SpecialButton("Borrar");
+
+	Label sliderLabel = new Label("Borde");
+	Label fillLabel = new Label("Relleno");
+	Slider slider = new Slider(1, 50, 1);
+	final ColorPicker borderColorPicker = new ColorPicker(Color.GREEN);
+	final ColorPicker fillColorPicker = new ColorPicker(Color.GREEN);
+	final Label coloredText = new Label("Colors");
+
+
 
 	// Dibujar una figura
 	Point startPoint;
@@ -56,6 +64,10 @@ public class PaintPane extends BorderPane {
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
+		slider.setShowTickMarks(true);
+		slider.setShowTickLabels(true);
+		coloredText.setFont(new Font(53));
+		buttonsBox.getChildren().addAll(sliderLabel, slider, borderColorPicker, fillLabel, fillColorPicker);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -169,6 +181,11 @@ public class PaintPane extends BorderPane {
 		boolean found = figure.figureBelongs(eventPoint);
 		return found;
 
+	}
+
+	private String createRGBString(Color c) {
+		return String.format("-fx-base: rgb(%f,%f,%f);", (c.getRed() * 255),
+				(c.getGreen() * 255), (c.getBlue() * 255));
 	}
 
 }

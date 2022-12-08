@@ -27,3 +27,5 @@ Aplicamos lo mismo para figureBelongs creando un metodo figureBelongs en Figure
 Agregamos clases para los botones, de ese modo, no tenemos que hacer tantos
  if else if porque usamos for each, ya que cada boton tiene su propio comportamiento, lo unico que
  hacemos es revisar cual es el seleccionado
+
+ Agregamos diseño de PaintPane (slider, texto y colorSelectors.

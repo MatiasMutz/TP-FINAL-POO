@@ -22,3 +22,8 @@ En paintPane habia muchos if e instanceof para mover la figura, para solucionar 
 metodos moveX y moveY en la interfaz figure y los implementamos en cada figura.
 Aplicamos la misma idea para redrawCanvas creando un metodo redrawCanvas en Figure
 Aplicamos lo mismo para figureBelongs creando un metodo figureBelongs en Figure
+
+
+Agregamos clases para los botones, de ese modo, no tenemos que hacer tantos
+ if else if porque usamos for each, ya que cada boton tiene su propio comportamiento, lo unico que
+ hacemos es revisar cual es el seleccionado
