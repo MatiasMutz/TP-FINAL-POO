@@ -17,3 +17,6 @@ entonces para mover los puntos, utilizamos los metodos moveX, moveY
 En AppMenuBar cambiamos el metodo showAndWait. Ahora utilizamos primero aplicamos el metodo filter
 para que en el caso de que la respuesta obtenida haya sido un OK, entonces que se ejecute el
 Platform.exit para salir de la aplicacion.
+
+En paintPane habia muchos if e instanceof para mover la figura, para solucionar esto, creamos los
+metodos moveX y moveY en la interfaz figure y los implementamos en cada figura

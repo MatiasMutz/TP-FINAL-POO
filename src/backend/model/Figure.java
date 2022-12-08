@@ -1,8 +1,12 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public interface Figure {
-    public void moveX(double distance);
-    public void moveY(double distance);
+     void moveX(double distance);
+     void moveY(double distance);
+
+     void redrawCanvas(GraphicsContext gc);
 
 
 }
