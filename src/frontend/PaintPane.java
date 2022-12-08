@@ -185,9 +185,4 @@ public class PaintPane extends BorderPane {
 
 	}
 
-	private String createRGBString(Color c) {
-		return String.format("-fx-base: rgb(%f,%f,%f);", (c.getRed() * 255),
-				(c.getGreen() * 255), (c.getBlue() * 255));
-	}
-
 }
