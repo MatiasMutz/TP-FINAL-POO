@@ -28,6 +28,12 @@ public class Rectangle implements Figure {
         gc.strokeRect(topLeft.getX(), topLeft.getY(),
                 Math.abs(topLeft.getX() - bottomRight.getX()), Math.abs(topLeft.getY() - bottomRight.getY()));
     }
+
+    @Override
+    public boolean figureBelongs(Point eventPoint){
+        return eventPoint.getX() > topLeft.getX() && eventPoint.getX() < bottomRight.getX() &&
+                eventPoint.getY() > topLeft.getY() && eventPoint.getY() < bottomRight.getY();
+    }
     public Point getTopLeft() {
         return topLeft;
     }

@@ -8,5 +8,7 @@ public interface Figure {
 
      void redrawCanvas(GraphicsContext gc);
 
+     boolean figureBelongs(Point eventPoint);
+
 
 }
