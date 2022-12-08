@@ -1,0 +1,6 @@
+Hicimos que la clase Circle extienda a Ellipse para aprovechar el comportamiento.
+En el constructor llamamos al de Ellipse con radius*2 como mayor y minor axis.
+En getRadius hicimos que devuelva getMayorAxis()/2.
+Las variables de Ellipse las convertimos a private en vez de protected y utilizamos los getters
+en los métodos de Circle.
+También borramos el método repetidos de Circle getCenterPoint(que es igual que el de Ellipse).
