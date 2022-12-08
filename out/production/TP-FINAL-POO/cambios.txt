@@ -19,4 +19,6 @@ para que en el caso de que la respuesta obtenida haya sido un OK, entonces que s
 Platform.exit para salir de la aplicacion.
 
 En paintPane habia muchos if e instanceof para mover la figura, para solucionar esto, creamos los
-metodos moveX y moveY en la interfaz figure y los implementamos en cada figura
+metodos moveX y moveY en la interfaz figure y los implementamos en cada figura.
+Aplicamos la misma idea para redrawCanvas creando un metodo redrawCanvas en Figure
+Aplicamos lo mismo para figureBelongs creando un metodo figureBelongs en Figure
