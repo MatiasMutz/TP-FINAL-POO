@@ -1,0 +1,14 @@
+Hicimos que la clase Circle extienda a Ellipse para aprovechar el comportamiento.
+En el constructor llamamos al de Ellipse con radius*2 como mayor y minor axis.
+En getRadius hicimos que devuelva getMayorAxis()/2.
+Las variables de Ellipse las convertimos a private en vez de protected y utilizamos los getters
+en los métodos de Circle.
+También borramos el método repetidos de Circle getCenterPoint(que es igual que el de Ellipse).
+
+Hicimos que la clase square extienda a Rectangle.
+Utilizamos super en el constructor y elminamos los metodos redundantes (los getters)
+
+En Point convertimos x,y en private y agregamos las clases de moveX y moveY para mover los puntos
+
+En PaintPane, al realizar los cambios en Point dejaba de funcionar pues x,y ya no eran public,
+entonces para mover los puntos, utilizamos los metodos moveX, moveY
