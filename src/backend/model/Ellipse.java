@@ -55,4 +55,8 @@ public class Ellipse extends Figure {
         return new Ellipse(new Point(400,300),sMayorAxis,sMinorAxis,getFormat());
     }
 
+    @Override
+    public Figure getCopy(){
+        return new Ellipse(centerPoint,sMayorAxis,sMinorAxis,getFormat());
+    }
 }

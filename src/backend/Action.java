@@ -3,7 +3,7 @@ package backend;
 public enum Action {
     ADD(""),
     DELETE,
-    CHANGECOLOR,
+    CHANGEBORDERCOLOR,
     CHANGEFILL,
     CHANGEBORDER,
     COPYFORMAT,

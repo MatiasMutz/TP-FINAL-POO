@@ -19,4 +19,8 @@ public class Square extends Rectangle {
         Point auxBottomRight=new Point(400+(getBottomRight().getX()-getTopLeft().getX())/2,300-(getTopLeft().getY()- getBottomRight().getY())/2);
         return new Square(auxTopLeft,size,getFormat());
     }
+    @Override
+    public Figure getCopy(){
+        return new Square(getTopLeft(),size,getFormat());
+    }
 }

@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.Action;
 import backend.CanvasState;
 import backend.model.*;
 import backend.buttons.*;
@@ -186,28 +187,31 @@ public class PaintPane extends BorderPane {
 
 		copyFormatButton.setOnAction(event->{
 			if (selectedFigure!=null){
+				canvasState.addDone(selectedFigure.getCopy(),Action.COPYFORMAT);
 				copyFormat=new Format(selectedFigure.getFormat());
 			}
 
 		});
 
 		//Cambia el formato si
-		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
-		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
+		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEBORDERCOLOR));
+		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEFILL));
 		slider.valueProperty().addListener(new ChangeListener<Number>(){
 			public void changed(ObservableValue<?extends Number> observable, Number oldValue, Number newValue){
-				updateSelectedFormat(selectedFigure);
+				updateSelectedFormat(selectedFigure,Action.CHANGEBORDER);
 			}
 		});
 
 		copyButton.setOnAction(event->{
 			if(selectedFigure!=null){
+				canvasState.addDone(selectedFigure.getCopy(),Action.COPYFIGURE);
 				toCopyFigure=selectedFigure.centerFigure();
 			}
 		});
 
 		cutButton.setOnAction(event -> {
 			if(selectedFigure!=null){
+				canvasState.addDone(selectedFigure.getCopy(),Action.CUTFIGURE);
 				toCopyFigure=selectedFigure.centerFigure();
 				canvasState.deleteFigure(selectedFigure);
 				redrawCanvas();
@@ -226,8 +230,9 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	private void updateSelectedFormat(Figure selectedFigure){
+	private void updateSelectedFormat(Figure selectedFigure, Action action){
 		if(selectedFigure!=null){
+			canvasState.addDone(selectedFigure.getCopy(),action);
 			selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
 		}
 		redrawCanvas();
