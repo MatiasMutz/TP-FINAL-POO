@@ -61,7 +61,7 @@ public class PaintPane extends BorderPane {
 	Figure selectedFigure;
 
 	// Figura a copiar
-	Figure toCopyFigure;
+	Figure toCopyFigure=null;
 
 	// StatusBar
 	StatusPane statusPane;
@@ -71,6 +71,10 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 		this.cutCopyPastePane=cutCopyPastePane;
 		this.undoPane=undoPane;
+
+		Button cutButton=cutCopyPastePane.getCutButton();
+		Button copyButton=cutCopyPastePane.getCopyButton();
+		Button pasteButton=cutCopyPastePane.getPasteButton();
 
 		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton,copyFormatButton};
 		ToggleGroup tools = new ToggleGroup();
@@ -113,13 +117,7 @@ public class PaintPane extends BorderPane {
 				}
 			}
 
-			for(CutCopyPasteButtons button : cutCopyPastePane.getButtons()){
-				if(button.isPressed()){
-					if (selectedFigure != null){
-						button.apply(selectedFigure, canvasState);
-					}
-				}
-			}
+
 		});
 
 		canvas.setOnMouseMoved(event -> {
@@ -199,6 +197,28 @@ public class PaintPane extends BorderPane {
 		slider.valueProperty().addListener(new ChangeListener<Number>(){
 			public void changed(ObservableValue<?extends Number> observable, Number oldValue, Number newValue){
 				updateSelectedFormat(selectedFigure);
+			}
+		});
+
+		copyButton.setOnAction(event->{
+			if(selectedFigure!=null){
+				toCopyFigure=selectedFigure.centerFigure();
+			}
+		});
+
+		cutButton.setOnAction(event -> {
+			if(selectedFigure!=null){
+				toCopyFigure=selectedFigure.centerFigure();
+				canvasState.deleteFigure(selectedFigure);
+				redrawCanvas();
+			}
+		});
+
+		pasteButton.setOnAction(event -> {
+			if(toCopyFigure!=null){
+				canvasState.addFigure(toCopyFigure);
+				toCopyFigure=null;
+				redrawCanvas();
 			}
 		});
 

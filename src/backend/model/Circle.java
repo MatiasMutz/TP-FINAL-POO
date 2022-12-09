@@ -14,5 +14,8 @@ public class Circle extends Ellipse {
     public double getRadius() {
         return getsMayorAxis()/2;
     }
-
+    @Override
+    public Figure centerFigure(){
+        return new Circle(new Point(400,300),getRadius(),getFormat());
+    }
 }

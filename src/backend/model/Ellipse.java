@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Ellipse extends Figure {
 
-    private final Point centerPoint;
+    private  Point centerPoint;
     private final double sMayorAxis, sMinorAxis;
 
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis,Format format) {
@@ -49,6 +49,10 @@ public class Ellipse extends Figure {
 
     public double getsMinorAxis() {
         return sMinorAxis;
+    }
+    @Override
+    public Figure centerFigure(){
+        return new Ellipse(new Point(400,300),sMayorAxis,sMinorAxis,getFormat());
     }
 
 }

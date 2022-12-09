@@ -24,6 +24,8 @@ public abstract class Figure {
 
      public abstract boolean figureBelongs(Point eventPoint);
 
+     public abstract Figure centerFigure();
+
 
 
 

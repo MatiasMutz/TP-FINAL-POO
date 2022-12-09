@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Rectangle extends Figure {
 
-    private final Point topLeft, bottomRight;
+    private Point topLeft, bottomRight;
 
     public Rectangle(Point topLeft, Point bottomRight,Format format) {
         super(format);
@@ -46,6 +46,12 @@ public class Rectangle extends Figure {
     @Override
     public String toString() {
         return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
+    }
+    @Override
+    public Figure centerFigure(){
+        Point auxTopLeft=new Point(400-(bottomRight.getX()-topLeft.getX())/2,300+(topLeft.getY()- bottomRight.getY())/2);
+        Point auxBottomRight=new Point(400+(bottomRight.getX()-topLeft.getX())/2,300-(topLeft.getY()- bottomRight.getY())/2);
+        return new Rectangle(auxTopLeft,auxBottomRight,getFormat());
     }
 
 }
