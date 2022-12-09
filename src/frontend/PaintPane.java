@@ -214,8 +214,8 @@ public class PaintPane extends BorderPane {
 
 		cutButton.setOnAction(event -> {
 			if(selectedFigure!=null){
-				canvasState.addDone(selectedFigure.getCopy(),Action.CUTFIGURE);
 				toCopyFigure=selectedFigure.centerFigure();
+				canvasState.addDone(selectedFigure.getCopy(),Action.CUTFIGURE);
 				canvasState.deleteFigure(selectedFigure);
 				redrawCanvas();
 			}

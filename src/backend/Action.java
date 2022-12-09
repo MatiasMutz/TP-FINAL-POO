@@ -21,4 +21,6 @@ public enum Action {
     public String getMessage(Figure figure){
         return message + figure.getName();
     }
+    public abstract void doo(Figure figure);
+    public abstract void undo(Figure figure);
 }
