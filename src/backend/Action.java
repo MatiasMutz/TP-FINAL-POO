@@ -5,16 +5,7 @@ import backend.model.Figure;
 import java.util.List;
 
 public enum Action {
-    MOVE("Mover un"){
-        @Override
-        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            Action.removeF1addF2(canvasState,oldFigure,newFigure);
-        }
-        @Override //Como agregue(ADD) el undo tiene que borrar (el oldFigure es null)
-        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            Action.removeF1addF2(canvasState,newFigure,oldFigure);
-        }
-    },
+
     ADD("Dibujar un "){
 
         @Override

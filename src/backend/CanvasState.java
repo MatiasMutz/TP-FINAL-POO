@@ -15,15 +15,18 @@ public class CanvasState {
 
     private LinkedList<Change> done= new LinkedList<>(); //Todos los pasos
 
-    private LinkedList<Change> undone=new LinkedList<>(); //Todo lo desecho
+    private LinkedList<Change> undone=new LinkedList<>(); //Todo lo deshecho
 
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
     }
 
+    //Agrega la figura al canvas
     public void addVisual(Figure figure){
         list.add(figure);
     }
+
+    //Borra la figura del canvas
     public void removeVisual(Figure figure){
         list.remove(figure);
     }
@@ -60,19 +63,23 @@ public class CanvasState {
     public void addDone(Change change){
         done.add(change);
     }
+
+    //Agrega un cambio a la lista de deshechos
     public void addUndone(Figure oldFigure,Figure newFigure,Action action){
         undone.add(new Change(oldFigure,newFigure,action));
     }
     public void addUndone(Change change){
-        undone.add(change);;
+        undone.add(change);
     }
 
+    //Quita el ultimo elemento de la lista de cambios si es que hay
     private Change getLastDone(){
         if (done.isEmpty()){
             return null;
         }
         return done.removeLast();
     }
+    //Quita el ultimo elemento de la lista de desechos si es que hay
     private Change getLastUndone(){
         if (undone.isEmpty()){
             return null;
@@ -80,6 +87,7 @@ public class CanvasState {
         return undone.removeLast();
     }
 
+    //Deshace el ultimo cambio
     public void undo(){
         Change change=getLastDone();
         if(change!=null){
@@ -87,6 +95,8 @@ public class CanvasState {
             addUndone(change);
         }
     }
+
+    //Rehace el ultimo cambio que fue desecho
     public void redo(){
         Change change=getLastUndone();
         if (change!=null){
@@ -95,35 +105,42 @@ public class CanvasState {
         }
     }
 
+    // Vacia la lista de desechos
     private void restartUndone(){
         undone=new LinkedList<>();
     }
 
+    //Devuelve la figura que esta para ser copiada
     public Figure getToCopyFigure() {
         return toCopyFigure;
     }
-
+    //Setea la figura que esta para ser copiada
     public void setToCopyFigure(Figure figure){
         toCopyFigure=figure;
     }
 
+    //Deja vacia la figura que esta para ser copiada, osea no hay nada para copiar
     public void restartToCopyFigure(){
         setToCopyFigure(null);
     }
 
+    //Devuelve la cantidad de elementos que se pueden deshacer
     public int toUndoAvailable(){
         return done.size();
     }
+    //Devuelve la cantidad de elementos que se pueden rehacer
     public int toRedoAvailable(){
         return undone.size();
     }
 
+    //Devuelve el mensaje que indica lo que se deshace
     public String getUndoMessage(){
         if (done.isEmpty()){
             return "nada";
         }
         return done.peekLast().toString();
     }
+    //Devuelve el mensaje que indica lo que se rehace
     public String getRedoMessage(){
         if (undone.isEmpty()){
             return "nada";

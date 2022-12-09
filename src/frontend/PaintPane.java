@@ -302,10 +302,8 @@ public class PaintPane extends BorderPane {
 		}
 	}
 	private void moveFigure(double diffX,double diffY){
-		Figure oldFigure=selectedFigure.getCopy();
 		selectedFigure.moveX(diffX);
 		selectedFigure.moveY(diffY);
-		canvasState.addDone(oldFigure,selectedFigure,Action.MOVE);
 	}
 	private void deleteFigure(){
 
