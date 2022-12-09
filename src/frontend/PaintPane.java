@@ -49,9 +49,9 @@ public class PaintPane extends BorderPane {
 
 	Label sliderLabel = new Label("Borde");
 	Label fillLabel = new Label("Relleno");
-	Slider slider = new Slider(1, 50, 1);
-	final ColorPicker borderColorPicker = new ColorPicker(Color.GREEN);
-	final ColorPicker fillColorPicker = new ColorPicker(Color.GREEN);
+	Slider slider = new Slider(1, 50, 10);
+	final ColorPicker borderColorPicker = new ColorPicker(Color.BLACK);
+	final ColorPicker fillColorPicker = new ColorPicker(Color.BLUE);
 	final Label coloredText = new Label("Colors");
 
 	private Format copyFormat=null, newFormat=null;
