@@ -3,6 +3,8 @@ package frontend;
 import backend.CanvasState;
 import backend.model.*;
 import frontend.buttons.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Translate;
 
 import java.awt.event.MouseEvent;
 
@@ -43,6 +46,8 @@ public class PaintPane extends BorderPane {
 	final Label coloredText = new Label("Colors");
 
 	private Format copyFormat=null, newFormat=null;
+
+	Translate translate = new Translate();
 
 	// Dibujar una figura
 	Point startPoint;
@@ -174,7 +179,11 @@ public class PaintPane extends BorderPane {
 
 		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
 		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
-		slider.setOnTouchReleased(event->updateSelectedFormat(selectedFigure));
+		slider.valueProperty().addListener(new ChangeListener<Number>(){
+			public void changed(ObservableValue<?extends Number> observable, Number oldValue, Number newValue){
+				updateSelectedFormat(selectedFigure);
+			}
+		});
 
 
 
