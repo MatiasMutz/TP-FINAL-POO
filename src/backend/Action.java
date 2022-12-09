@@ -2,6 +2,8 @@ package backend;
 
 import backend.model.Figure;
 
+import java.util.List;
+
 public enum Action {
     MOVE("Mover un"){
         @Override
@@ -17,11 +19,11 @@ public enum Action {
 
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.addFigure(newFigure);
+            canvasState.addVisual(newFigure);
         }
         @Override //Como agregue(ADD) el undo tiene que borrar (el oldFigure es null)
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.removeFigure(newFigure);
+            canvasState.removeVisual(newFigure);
         }
     },
     DELETE("Borrar "){
@@ -29,11 +31,11 @@ public enum Action {
         @Override //Yo habia borrado, lee hice un undo entonces volvio a estar lo que sria oldFigure,
         // entonce ahora quiero que se vuelva a borrar oldFigure
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.removeFigure(oldFigure);
+            canvasState.removeVisual(oldFigure);
         }
         @Override //Como borre(DELETE) el undo tiene que agregar (el newFigure es null)
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.addFigure(oldFigure);
+            canvasState.addVisual(oldFigure);
         }
     },
     CHANGEBORDERCOLOR("Cambiar el color de borde de un"){
@@ -79,12 +81,12 @@ public enum Action {
     CUTFIGURE("Cortar "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.removeFigure(oldFigure);
+            canvasState.removeVisual(oldFigure);
             canvasState.setToCopyFigure(oldFigure);
         }
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.addFigure(oldFigure);
+            canvasState.addVisual(oldFigure);
             canvasState.restartToCopyFigure();
         }
     },
@@ -101,11 +103,11 @@ public enum Action {
     PASTEFIGURE("Pegar "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.addFigure(newFigure);
+            canvasState.addVisual(newFigure);
         }
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.removeFigure(newFigure);
+            canvasState.removeVisual(newFigure);
         }
     };
 
@@ -121,7 +123,8 @@ public enum Action {
     public abstract void undo(CanvasState canvasState, Figure oldFigure,Figure newFigure);
 
     static private void removeF1addF2(CanvasState canvasState,Figure figure1,Figure figure2){
-        canvasState.removeFigure(figure1);
-        canvasState.addFigure(figure2);
+
+        canvasState.removeVisual(figure1);
+        canvasState.addVisual(figure2);
     }
 }

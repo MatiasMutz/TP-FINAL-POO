@@ -21,9 +21,16 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
+    public void addVisual(Figure figure){
+        list.add(figure);
+    }
+    public void removeVisual(Figure figure){
+        list.remove(figure);
+    }
+
     //Agregar la figura al canvas y tambien la agrega a la lista de cambios por un undo o redo
     public void addFigure(Figure figure) {
-        list.add(figure);
+        addVisual(figure);
         addDone(null,figure,Action.ADD);
     }
 
@@ -36,7 +43,7 @@ public class CanvasState {
 
     //Borra el elemento de la pantalla pero por un undo o rdo
     public void removeFigure(Figure figure){
-        list.remove(figure);
+        removeVisual(figure);
         addDone(figure,null,Action.DELETE);
     }
 
