@@ -8,9 +8,11 @@ public class MainFrame extends VBox {
     public MainFrame(CanvasState canvasState) {
         getChildren().add(new AppMenuBar());
         StatusPane statusPane = new StatusPane();
-        getChildren().add(new CutCopyPastePane());
-        getChildren().add(new UndoPane());
-        getChildren().add(new PaintPane(canvasState, statusPane));
+        CutCopyPastePane cutCopyPastePane=new CutCopyPastePane();
+        getChildren().add(cutCopyPastePane);
+        UndoPane undoPane=new UndoPane();
+        getChildren().add( undoPane);
+        getChildren().add(new PaintPane(canvasState, statusPane,cutCopyPastePane,undoPane));
         getChildren().add(statusPane);
     }
 

@@ -20,6 +20,8 @@ public class PaintPane extends BorderPane {
 
 	// BackEnd
 	CanvasState canvasState;
+	CutCopyPastePane cutCopyPastePane;
+	UndoPane undoPane;
 
 	// Canvas y relacionados
 	Canvas canvas = new Canvas(800, 600);
@@ -56,9 +58,13 @@ public class PaintPane extends BorderPane {
 	// StatusBar
 	StatusPane statusPane;
 
-	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
+	public PaintPane(CanvasState canvasState, StatusPane statusPane,CutCopyPastePane cutCopyPastePane,UndoPane undoPane) {
+		//
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+		this.cutCopyPastePane=cutCopyPastePane;
+		this.undoPane=undoPane;
+
 		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton,copyFormatButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
@@ -175,6 +181,7 @@ public class PaintPane extends BorderPane {
 
 		});
 
+		//Cambia el formato si
 		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
 		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure));
 		slider.valueProperty().addListener(new ChangeListener<Number>(){
