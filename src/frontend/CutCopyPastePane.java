@@ -30,6 +30,7 @@ public class CutCopyPastePane extends BorderPane {
 
     private Button[] toolsArr = {cutButton, copyButton, pasteButton};
 
+
     public CutCopyPastePane() {
         ToggleGroup tools = new ToggleGroup();
         for (Button tool : toolsArr) {
@@ -41,6 +42,7 @@ public class CutCopyPastePane extends BorderPane {
         buttonsBox.setPadding(new Insets(5));
         buttonsBox.setStyle("-fx-background-color: #999");
         buttonsBox.setPrefWidth(100);
+        copyButton.setOnKeyPressed();
 
 
 
