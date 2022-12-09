@@ -229,6 +229,17 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		setOnKeyPressed(event -> {
+			if(event.isControlDown()){
+				if(event.getCode() == KeyCode.X)
+					cutButton.fire();
+				else if(event.getCode() == KeyCode.C)
+					copyButton.fire();
+				else if(event.getCode() == KeyCode.V)
+					pasteButton.fire();
+			}
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
