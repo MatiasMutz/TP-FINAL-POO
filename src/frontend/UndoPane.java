@@ -52,4 +52,11 @@ public class UndoPane extends BorderPane {
 
     }
 
+    public Button getUndoButton() {
+        return undoButton;
+    }
+
+    public Button getRedoButton() {
+        return redoButton;
+    }
 }

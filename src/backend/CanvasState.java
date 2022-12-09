@@ -48,6 +48,9 @@ public class CanvasState {
         }
     }
 
+    public Change getLastDone(){
+        return done.pop();
+    }
 
 
 

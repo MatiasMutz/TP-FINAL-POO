@@ -2,6 +2,7 @@ package frontend;
 
 import backend.Action;
 import backend.CanvasState;
+import backend.Change;
 import backend.model.*;
 import backend.buttons.*;
 import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
@@ -79,6 +80,9 @@ public class PaintPane extends BorderPane {
 		Button cutButton=cutCopyPastePane.getCutButton();
 		Button copyButton=cutCopyPastePane.getCopyButton();
 		Button pasteButton=cutCopyPastePane.getPasteButton();
+
+		Button undoButton=undoPane.getUndoButton();
+		Button redoButton=undoPane.getRedoButton();
 
 		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton,copyFormatButton};
 		ToggleGroup tools = new ToggleGroup();
@@ -226,7 +230,7 @@ public class PaintPane extends BorderPane {
 		pasteButton.setOnAction(event -> {
 			if(toCopyFigure!=null){
 				canvasState.addFigure(toCopyFigure);
-				toCopyFigure=null;
+				//toCopyFigure=null;
 				redrawCanvas();
 			}
 		});
@@ -240,6 +244,12 @@ public class PaintPane extends BorderPane {
 				else if(event.getCode() == KeyCode.V)
 					pasteButton.fire();
 			}
+		});
+
+		undoButton.setOnAction(event -> {
+			Change lastDone=canvasState.getLastDone();
+
+
 		});
 
 		setLeft(buttonsBox);

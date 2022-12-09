@@ -12,13 +12,21 @@ public class Change {
         this.action=action;
     }
 
-    public Figure getOldFigure(){
+   /* public Figure getOldFigure(){
         return oldFigure;
     }
 
-    public Figure getNewFigure(){return newFigure};
+    public Figure getNewFigure(){return newFigure;}
 
     public Action getAction(){
         return action;
+    }*/
+
+    public void undo(){
+        action.undo(oldFigure,newFigure);
+    }
+
+    public void redo(){
+        action.redo(oldFigure,newFigure);
     }
 }

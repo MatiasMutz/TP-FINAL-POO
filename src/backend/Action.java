@@ -3,7 +3,12 @@ package backend;
 import backend.model.Figure;
 
 public enum Action {
-    ADD("Dibujar un "),
+    ADD("Dibujar un "){
+        @Override
+        public void undo(Figure oldFigure, Figure newFigure) {
+
+        }
+    },
     DELETE("Borrar "),
     CHANGEBORDERCOLOR("Cambiar el color de borde de "),
     CHANGEFILL("Cambiar el color de relleno de "),
@@ -21,6 +26,6 @@ public enum Action {
     public String getMessage(Figure figure){
         return message + figure.getName();
     }
-    public abstract void doo(Figure figure);
-    public abstract void undo(Figure figure);
+    public abstract void redo(Figure oldFigure,Figure newFigure);
+    public abstract void undo(Figure oldFigure,Figure newFigure);
 }
