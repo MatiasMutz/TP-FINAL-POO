@@ -25,9 +25,7 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
-    private void centerFigure(Figure figure){
 
-    }
 
 
 }
