@@ -1,4 +1,4 @@
-package frontend.buttons;
+package frontend;
 
 import backend.CanvasState;
 import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
