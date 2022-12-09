@@ -1,4 +1,4 @@
-package frontend.buttons;
+package backend.buttons;
 
 import backend.model.Figure;
 import backend.model.Format;

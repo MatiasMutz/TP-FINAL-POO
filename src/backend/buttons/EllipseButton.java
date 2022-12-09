@@ -1,7 +1,6 @@
-package frontend.buttons;
+package backend.buttons;
 
 import backend.model.*;
-import javafx.scene.control.ToggleButton;
 
 public class EllipseButton extends SpecialButton{
     public EllipseButton(String info){

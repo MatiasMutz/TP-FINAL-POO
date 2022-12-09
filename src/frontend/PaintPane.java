@@ -2,7 +2,7 @@ package frontend;
 
 import backend.CanvasState;
 import backend.model.*;
-import frontend.buttons.*;
+import backend.buttons.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Translate;
-
-import java.awt.event.MouseEvent;
 
 public class PaintPane extends BorderPane {
 

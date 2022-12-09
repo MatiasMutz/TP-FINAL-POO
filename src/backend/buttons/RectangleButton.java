@@ -1,10 +1,9 @@
-package frontend.buttons;
+package backend.buttons;
 
 import backend.model.Figure;
 import backend.model.Format;
 import backend.model.Point;
 import backend.model.Rectangle;
-import javafx.scene.control.ToggleButton;
 
 public class RectangleButton extends SpecialButton{
     public RectangleButton(String info){
