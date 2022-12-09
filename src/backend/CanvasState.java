@@ -1,11 +1,16 @@
 package backend;
 
 import backend.model.Figure;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CanvasState {
+
+    private Figure toCopyFigure;
 
     private final List<Figure> list = new ArrayList<>();
 
@@ -21,4 +26,16 @@ public class CanvasState {
         return new ArrayList<>(list);
     }
 
+    public Figure getToCopyFigure() {
+        return toCopyFigure;
+    }
+
+    public void setToCopyFigure(Figure toCopyFigure) {
+        this.toCopyFigure = toCopyFigure;
+
+    }
+
+    private void centerFigure(Figure figure){
+
+    }
 }

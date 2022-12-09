@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.VBox;
 
 public class MainFrame extends VBox {
@@ -11,7 +12,7 @@ public class MainFrame extends VBox {
         CutCopyPastePane cutCopyPastePane=new CutCopyPastePane();
         getChildren().add(cutCopyPastePane);
         UndoPane undoPane=new UndoPane();
-        getChildren().add( undoPane);
+        getChildren().add(undoPane);
         getChildren().add(new PaintPane(canvasState, statusPane,cutCopyPastePane,undoPane));
         getChildren().add(statusPane);
     }

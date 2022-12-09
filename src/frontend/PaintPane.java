@@ -3,6 +3,7 @@ package frontend;
 import backend.CanvasState;
 import backend.model.*;
 import backend.buttons.*;
+import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -10,11 +11,15 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.transform.Translate;
+
+import java.util.ResourceBundle;
 
 public class PaintPane extends BorderPane {
 
@@ -55,11 +60,13 @@ public class PaintPane extends BorderPane {
 	// Seleccionar una figura
 	Figure selectedFigure;
 
+	// Figura a copiar
+	Figure toCopyFigure;
+
 	// StatusBar
 	StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane,CutCopyPastePane cutCopyPastePane,UndoPane undoPane) {
-		//
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 		this.cutCopyPastePane=cutCopyPastePane;
@@ -102,6 +109,14 @@ public class PaintPane extends BorderPane {
 						startPoint = null;
 						redrawCanvas();
 						return;
+					}
+				}
+			}
+
+			for(CutCopyPasteButtons button : cutCopyPastePane.getButtons()){
+				if(button.isPressed()){
+					if (selectedFigure != null){
+						button.apply(selectedFigure, canvasState);
 					}
 				}
 			}
@@ -150,8 +165,6 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-
-
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
@@ -173,7 +186,6 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-
 		copyFormatButton.setOnAction(event->{
 			if (selectedFigure!=null){
 				copyFormat=new Format(selectedFigure.getFormat());
@@ -189,7 +201,6 @@ public class PaintPane extends BorderPane {
 				updateSelectedFormat(selectedFigure);
 			}
 		});
-
 
 		setLeft(buttonsBox);
 		setRight(canvas);
@@ -221,7 +232,6 @@ public class PaintPane extends BorderPane {
 	boolean figureBelongs(Figure figure, Point eventPoint) {
 		boolean found = figure.figureBelongs(eventPoint);
 		return found;
-
 	}
 
 }
