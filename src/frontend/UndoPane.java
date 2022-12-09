@@ -19,8 +19,16 @@ import java.util.ResourceBundle;
 
 public class UndoPane extends BorderPane {
 
-    Label undoLabel = new Label("0");
-    Label redoLabel = new Label("0");
+    private String redoMessage = "";
+    private String undoMessage = "";
+
+    private Integer redoTimes=0;
+    private Integer undoTimes=0;
+
+    Label undoLabel = new Label(undoTimes.toString());
+    Label redoLabel = new Label(redoTimes.toString());
+    Label redoMessageLabel = new Label(redoMessage);
+    Label undoMessageLabel = new Label(undoMessage);
     String undoIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("undoIcon");
     Image undoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(undoIconPath)).toString());
     Button undoButton = new Button("Deshacer", new ImageView(undoIcon));
@@ -35,9 +43,9 @@ public class UndoPane extends BorderPane {
 
     public UndoPane(){
         HBox buttonsBox = new HBox(10);
-        buttonsBox.getChildren().addAll(undoLabel);
+        buttonsBox.getChildren().addAll(undoMessageLabel, undoLabel);
         buttonsBox.getChildren().addAll(toolsArr);
-        buttonsBox.getChildren().addAll(redoLabel);
+        buttonsBox.getChildren().addAll(redoLabel, redoMessageLabel);
         buttonsBox.setStyle("-fx-background-color: #999");
 
         undoLabel.setAlignment(Pos.CENTER);
