@@ -67,20 +67,6 @@ public class CanvasState {
         undone.add(change);;
     }
 
-    public void removeDone(){
-        Change change=done.pop();
-        if(change!=null) {
-            undone.add(change);
-        }
-    }
-
-    public void removeUndone(){
-        Change change=undone.pop();
-        if(change!=null) {
-            done.add(change);
-        }
-    }
-
     private Change getLastDone(){
         if (done.isEmpty()){
             return null;
@@ -125,23 +111,25 @@ public class CanvasState {
         setToCopyFigure(null);
     }
 
-    public int doneSize(){
+    public int toUndoAvailable(){
         return done.size();
     }
-    public int undoneSize(){
+    public int toRedoAvailable(){
         return undone.size();
     }
 
     public String getUndoMessage(){
         if (done.isEmpty()){
-            return "";
+            return "nada";
         }
         return done.peekLast().toString();
     }
     public String getRedoMessage(){
         if (undone.isEmpty()){
-            return "";
+            return "nada";
         }
         return undone.peekLast().toString();
     }
+
+
 }

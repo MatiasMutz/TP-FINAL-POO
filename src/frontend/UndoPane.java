@@ -43,10 +43,7 @@ public class UndoPane extends BorderPane {
 
     public UndoPane(CanvasState canvasState){
         HBox buttonsBox = new HBox(10);
-        undoTimes=canvasState.doneSize();
-        redoTimes=canvasState.undoneSize();
-        redoMessage=canvasState.getRedoMessage();
-        undoMessage=canvasState.getUndoMessage();
+
         buttonsBox.getChildren().addAll(undoMessageLabel, undoLabel);
         buttonsBox.getChildren().addAll(toolsArr);
         buttonsBox.getChildren().addAll(redoLabel, redoMessageLabel);
@@ -64,6 +61,13 @@ public class UndoPane extends BorderPane {
         buttonsBox.setAlignment(Pos.CENTER);
 
 
+    }
+
+    public void updateUndoPane(String redoText, Integer redoTimes,String undoText,Integer undoTimes){
+        redoMessageLabel.setText(redoText);
+        undoMessageLabel.setText(undoText);
+        undoLabel.setText(undoTimes.toString());
+        redoLabel.setText(redoTimes.toString());
     }
 
     public Button getUndoButton() {

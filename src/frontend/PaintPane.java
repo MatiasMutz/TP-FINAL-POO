@@ -148,6 +148,7 @@ public class PaintPane extends BorderPane {
 		copyButton.setOnAction(event->{
 			if(selectedFigure!=null){
 				copyFigure();
+				updateUndoPane();
 			}
 
 		});
@@ -155,6 +156,7 @@ public class PaintPane extends BorderPane {
 		cutButton.setOnAction(event -> {
 			if(selectedFigure!=null){
 				cutFigure();
+
 			}
 		});
 
@@ -210,6 +212,7 @@ public class PaintPane extends BorderPane {
 			gc.setFill(figure.getFormat().getFillColor());
 			gc.setLineWidth(figure.getFormat().getBorderWidth());
 			figure.redrawCanvas(gc);
+			updateUndoPane();
 
 		}
 	}
@@ -331,4 +334,9 @@ public class PaintPane extends BorderPane {
 		canvasState.setToCopyFigure(selectedFigure.getCopy().centerFigure());
 		canvasState.addDone(canvasState.getToCopyFigure(),null,action);
 	}
+
+	private void updateUndoPane(){
+		undoPane.updateUndoPane(canvasState.getRedoMessage(),canvasState.toRedoAvailable(),canvasState.getUndoMessage(),canvasState.toUndoAvailable());
+	}
+
 }
