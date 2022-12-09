@@ -53,6 +53,10 @@ public class Rectangle extends Figure {
         Point auxBottomRight=new Point(400+(bottomRight.getX()-topLeft.getX())/2,300-(topLeft.getY()- bottomRight.getY())/2);
         return new Rectangle(auxTopLeft,auxBottomRight,getFormat());
     }
+    @Override
+    public Figure getCopy(){
+        return new Rectangle(topLeft,bottomRight,getFormat());
+    }
 
     @Override
     public String getName(){

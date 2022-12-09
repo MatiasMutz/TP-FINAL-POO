@@ -28,6 +28,8 @@ public abstract class Figure {
 
      public abstract String getName();
 
+     public abstract Figure getCopy();
+
 
 
 

@@ -20,6 +20,11 @@ public class Circle extends Ellipse {
     }
 
     @Override
+    public Figure getCopy(){
+        return new Circle(getCenterPoint(),getRadius(),getFormat());
+    }
+
+    @Override
     public String getName(){
         return "Circulo";
     }

@@ -56,6 +56,10 @@ public class Ellipse extends Figure {
     }
 
     @Override
+    public Figure getCopy(){
+        return new Ellipse(centerPoint,sMayorAxis,sMinorAxis,getFormat());
+    }
+    @Override
     public String getName(){
         return "Elipse";
     }
