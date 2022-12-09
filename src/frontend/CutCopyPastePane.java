@@ -42,7 +42,6 @@ public class CutCopyPastePane extends BorderPane {
         buttonsBox.setPadding(new Insets(5));
         buttonsBox.setStyle("-fx-background-color: #999");
         buttonsBox.setPrefWidth(100);
-        copyButton.setOnKeyPressed();
 
 
 

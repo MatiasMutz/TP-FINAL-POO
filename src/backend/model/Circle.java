@@ -18,4 +18,9 @@ public class Circle extends Ellipse {
     public Figure centerFigure(){
         return new Circle(new Point(400,300),getRadius(),getFormat());
     }
+
+    @Override
+    public String getName(){
+        return "Circulo";
+    }
 }

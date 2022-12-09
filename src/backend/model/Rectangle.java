@@ -54,4 +54,9 @@ public class Rectangle extends Figure {
         return new Rectangle(auxTopLeft,auxBottomRight,getFormat());
     }
 
+    @Override
+    public String getName(){
+        return "Rectangulo";
+    }
+
 }

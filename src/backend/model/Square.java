@@ -2,6 +2,7 @@ package backend.model;
 
 public class Square extends Rectangle {
 
+
     private double size;
     public Square(Point topLeft, double size,Format format) {
         super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size),format);
@@ -18,5 +19,10 @@ public class Square extends Rectangle {
         Point auxTopLeft=new Point(400-(getBottomRight().getX()-getTopLeft().getX())/2,300+(getTopLeft().getY()- getBottomRight().getY())/2);
         Point auxBottomRight=new Point(400+(getBottomRight().getX()-getTopLeft().getX())/2,300-(getTopLeft().getY()- getBottomRight().getY())/2);
         return new Square(auxTopLeft,size,getFormat());
+    }
+
+    @Override
+    public String getName(){
+        return "Cuadrado";
     }
 }
