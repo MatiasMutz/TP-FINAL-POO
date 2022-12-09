@@ -19,8 +19,8 @@ import java.util.ResourceBundle;
 
 public class UndoPane extends BorderPane {
 
-    private String redoMessage = "";
-    private String undoMessage = "";
+    private String redoMessage = "u";
+    private String undoMessage = "r";
 
     private Integer redoTimes=0;
     private Integer undoTimes=0;
@@ -53,6 +53,8 @@ public class UndoPane extends BorderPane {
 
         redoLabel.setAlignment(Pos.CENTER);
         redoLabel.setStyle("-fx-font-size: 16");
+        redoMessageLabel.setStyle("-fx-font-size: 16");
+        undoMessageLabel.setStyle("-fx-font-size: 16");
 
         setCenter(buttonsBox);
         buttonsBox.setAlignment(Pos.CENTER);
