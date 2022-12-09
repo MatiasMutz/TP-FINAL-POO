@@ -41,8 +41,12 @@ public class UndoPane extends BorderPane {
 
 
 
-    public UndoPane(){
+    public UndoPane(CanvasState canvasState){
         HBox buttonsBox = new HBox(10);
+        undoTimes=canvasState.doneSize();
+        redoTimes=canvasState.undoneSize();
+        redoMessage=canvasState.getRedoMessage();
+        undoMessage=canvasState.getUndoMessage();
         buttonsBox.getChildren().addAll(undoMessageLabel, undoLabel);
         buttonsBox.getChildren().addAll(toolsArr);
         buttonsBox.getChildren().addAll(redoLabel, redoMessageLabel);

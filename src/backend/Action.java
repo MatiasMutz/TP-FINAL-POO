@@ -3,20 +3,111 @@ package backend;
 import backend.model.Figure;
 
 public enum Action {
-    ADD("Dibujar un "){
+    MOVE("Mover un"){
         @Override
-        public void undo(Figure oldFigure, Figure newFigure) {
-
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            Action.removeF1addF2(canvasState,oldFigure,newFigure);
+        }
+        @Override //Como agregue(ADD) el undo tiene que borrar (el oldFigure es null)
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
     },
-    DELETE("Borrar "),
-    CHANGEBORDERCOLOR("Cambiar el color de borde de "),
-    CHANGEFILL("Cambiar el color de relleno de "),
-    CHANGEBORDER("Cambiar el ancho del borde de "),
-    COPYFORMAT("Copiar el formato de "),
-    CUTFIGURE("Cortar "),
-    COPYFIGURE("Copiar " ),
-    PASTEFIGURE("Pegar ");
+    ADD("Dibujar un "){
+
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            canvasState.addFigure(newFigure);
+        }
+        @Override //Como agregue(ADD) el undo tiene que borrar (el oldFigure es null)
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            canvasState.removeFigure(newFigure);
+        }
+    },
+    DELETE("Borrar "){
+
+        @Override //Yo habia borrado, lee hice un undo entonces volvio a estar lo que sria oldFigure,
+        // entonce ahora quiero que se vuelva a borrar oldFigure
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            canvasState.removeFigure(oldFigure);
+        }
+        @Override //Como borre(DELETE) el undo tiene que agregar (el newFigure es null)
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            canvasState.addFigure(oldFigure);
+        }
+    },
+    CHANGEBORDERCOLOR("Cambiar el color de borde de un"){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            removeF1addF2(canvasState,oldFigure,newFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            Action.removeF1addF2(canvasState,newFigure,oldFigure);
+        }
+    },
+    CHANGEFILL("Cambiar el color de relleno de un"){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            removeF1addF2(canvasState,oldFigure,newFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            Action.removeF1addF2(canvasState,newFigure,oldFigure);
+        }
+    },
+    CHANGEBORDER("Cambiar el ancho del borde de un"){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            removeF1addF2(canvasState,oldFigure,newFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            Action.removeF1addF2(canvasState,newFigure,oldFigure);
+        }
+    },
+    COPYFORMAT("Copiar el formato de un"){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            removeF1addF2(canvasState,oldFigure,newFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            Action.removeF1addF2(canvasState,newFigure,oldFigure);
+        }
+    },
+    CUTFIGURE("Cortar "){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            canvasState.removeFigure(oldFigure);
+            canvasState.setToCopyFigure(oldFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            canvasState.addFigure(oldFigure);
+            canvasState.restartToCopyFigure();
+        }
+    },
+    COPYFIGURE("Copiar " ){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            canvasState.setToCopyFigure(oldFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            canvasState.restartToCopyFigure();
+        }
+    },
+    PASTEFIGURE("Pegar "){
+        @Override
+        public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
+            canvasState.addFigure(newFigure);
+        }
+        @Override
+        public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
+            canvasState.removeFigure(newFigure);
+        }
+    };
 
     private String message;
     Action(String message){
@@ -26,6 +117,11 @@ public enum Action {
     public String getMessage(Figure figure){
         return message + figure.getName();
     }
-    public abstract void redo(Figure oldFigure,Figure newFigure);
-    public abstract void undo(Figure oldFigure,Figure newFigure);
+    public abstract void redo(CanvasState canvasState,Figure oldFigure,Figure newFigure);
+    public abstract void undo(CanvasState canvasState, Figure oldFigure,Figure newFigure);
+
+    static private void removeF1addF2(CanvasState canvasState,Figure figure1,Figure figure2){
+        canvasState.removeFigure(figure1);
+        canvasState.addFigure(figure2);
+    }
 }

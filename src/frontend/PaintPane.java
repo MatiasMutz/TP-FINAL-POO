@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -101,104 +102,38 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(50);
+		//----------------------- HASTA ACA CONFIG
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 
 		canvas.setOnMouseReleased(event -> {
-			Point endPoint = new Point(event.getX(), event.getY());
-			if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-				return ;
-			}
-
-			Figure newFigure = null;
-			for(SpecialButton button: toolsArr){
-				if(button.isSelected()){
-					newFigure=button.newFigure(startPoint,endPoint,new Format(fillColorPicker.getValue(),borderColorPicker.getValue(),slider.getValue()));
-					if(newFigure!=null){
-						canvasState.addFigure(newFigure);
-						startPoint = null;
-						redrawCanvas();
-						return;
-					}
-				}
-			}
-
-
+			addNewFigure(event,toolsArr);
 		});
 
 		canvas.setOnMouseMoved(event -> {
-			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean found = false;
-			StringBuilder label = new StringBuilder();
-			for(Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
-					found = true;
-					label.append(figure.toString());
-				}
-			}
-			if(found) {
-				statusPane.updateStatus(label.toString());
-			} else {
-				statusPane.updateStatus(eventPoint.toString());
-			}
+			mouseMovedonCanvas(event);
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if(selectionButton.isSelected()) {
-				Point eventPoint = new Point(event.getX(), event.getY());
-				boolean found = false;
-				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()) {
-					if(figureBelongs(figure, eventPoint)) {
-						found = true;
-						selectedFigure = figure;
-						if(copyFormat!=null){
-							Figure oldFigure=selectedFigure.getCopy();
-							selectedFigure.setFormat(copyFormat);
-							canvasState.addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
-							copyFormat=null;
-						}
-						label.append(figure.toString());
-					}
-				}
-				if (found) {
-					statusPane.updateStatus(label.toString());
-				} else {
-					selectedFigure = null;
-					statusPane.updateStatus("Ninguna figura encontrada");
-				}
-				redrawCanvas();
-			}
+			mouseClickonCanvas(event);
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
-				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(selectedFigure!=null){
-					selectedFigure.moveX(diffX);
-					selectedFigure.moveY(diffY);
-				}
-				redrawCanvas();
-			}
+			mouseDraggedonCanvas(event);
 		});
 
 		deleteButton.setOnAction(event -> {
 			if (selectedFigure != null) {
-				canvasState.deleteFigure(selectedFigure);
-				selectedFigure = null;
-				redrawCanvas();
+				deleteFigure();
 			}
 		});
 
 		copyFormatButton.setOnAction(event->{
-			if (selectedFigure!=null){
-				copyFormat=new Format(selectedFigure.getFormat());
+			if (selectedFigure!=null) {
+				copyFormatFigure();
 			}
-
 		});
 
 		//Cambia el formato si
@@ -212,25 +147,22 @@ public class PaintPane extends BorderPane {
 
 		copyButton.setOnAction(event->{
 			if(selectedFigure!=null){
-				Figure figure=selectedFigure.getCopy();
-				canvasState.addDone(figure,figure,Action.COPYFIGURE);
-				toCopyFigure=selectedFigure.centerFigure();
+				copyFigure();
 			}
+
 		});
 
 		cutButton.setOnAction(event -> {
 			if(selectedFigure!=null){
-				toCopyFigure=selectedFigure.centerFigure();
-				canvasState.addDone(selectedFigure.getCopy(),null,Action.CUTFIGURE);
-				canvasState.deleteFigure(selectedFigure);
-				redrawCanvas();
+				cutFigure();
 			}
 		});
 
 		pasteButton.setOnAction(event -> {
+			toCopyFigure=canvasState.getToCopyFigure();
 			if(toCopyFigure!=null){
 				canvasState.addFigure(toCopyFigure);
-				//toCopyFigure=null;
+				canvasState.restartToCopyFigure();
 				redrawCanvas();
 			}
 		});
@@ -247,11 +179,13 @@ public class PaintPane extends BorderPane {
 		});
 
 		undoButton.setOnAction(event -> {
-			Change lastDone=canvasState.getLastDone();
-
-
+			canvasState.undo();
+			redrawCanvas();
 		});
-
+		redoButton.setOnAction(event -> {
+			canvasState.redo();
+			redrawCanvas();
+		});
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -264,7 +198,6 @@ public class PaintPane extends BorderPane {
 		}
 		redrawCanvas();
 	}
-
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
@@ -280,10 +213,122 @@ public class PaintPane extends BorderPane {
 
 		}
 	}
-
 	boolean figureBelongs(Figure figure, Point eventPoint) {
 		boolean found = figure.figureBelongs(eventPoint);
 		return found;
 	}
 
+  	private void addNewFigure(MouseEvent event,SpecialButton[] toolsArr){
+		Point endPoint = new Point(event.getX(), event.getY());
+		if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+			return ;
+		}
+		Figure newFigure = null;
+		for(SpecialButton button: toolsArr){
+			if(button.isSelected()){
+				newFigure=button.newFigure(startPoint,endPoint,new Format(fillColorPicker.getValue(),borderColorPicker.getValue(),slider.getValue()));
+				if(newFigure!=null){
+					canvasState.addNewFigure(newFigure);
+					startPoint = null;
+					redrawCanvas();
+					return;
+				}
+			}
+		}
+	}
+	private void mouseMovedonCanvas(MouseEvent event){
+		Point eventPoint = new Point(event.getX(), event.getY());
+		boolean found = false;
+		StringBuilder label = new StringBuilder();
+		for(Figure figure : canvasState.figures()) {
+			if(figureBelongs(figure, eventPoint)) {
+				found = true;
+				label.append(figure.toString());
+			}
+		}
+		if(found) {
+			statusPane.updateStatus(label.toString());
+		} else {
+			statusPane.updateStatus(eventPoint.toString());
+		}
+	}
+	private void mouseClickonCanvas(MouseEvent event){
+		if(selectionButton.isSelected()) {
+			Point eventPoint = new Point(event.getX(), event.getY());
+			boolean found = false;
+			StringBuilder label = new StringBuilder("Se seleccionó: ");
+			for (Figure figure : canvasState.figures()) {
+				if(figureBelongs(figure, eventPoint)) {
+					found = true;
+					selectedFigure = figure;
+					selectFigure(selectedFigure);
+					label.append(figure.toString());
+				}
+			}
+			statusLabelFigureInfo(found,label);
+			redrawCanvas();
+		}
+	}
+
+	private void selectFigure(Figure selectedFigure){
+		if(copyFormat!=null){
+			Figure oldFigure=selectedFigure.getCopy();
+			selectedFigure.setFormat(copyFormat);
+			canvasState.addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
+			copyFormat=null;
+		}
+	}
+
+	private void statusLabelFigureInfo(boolean found,StringBuilder label){
+		if (found) {
+			statusPane.updateStatus(label.toString());
+		} else {
+			selectedFigure = null;
+			statusPane.updateStatus("Ninguna figura encontrada");
+		}
+	}
+	private void mouseDraggedonCanvas(MouseEvent event){
+		if(selectionButton.isSelected()) {
+			Point eventPoint = new Point(event.getX(), event.getY());
+			double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
+			double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+			if(selectedFigure!=null){
+				moveFigure(diffX,diffY);
+			}
+			redrawCanvas();
+		}
+	}
+	private void moveFigure(double diffX,double diffY){
+		Figure oldFigure=selectedFigure.getCopy();
+		selectedFigure.moveX(diffX);
+		selectedFigure.moveY(diffY);
+		canvasState.addDone(oldFigure,selectedFigure,Action.MOVE);
+	}
+	private void deleteFigure(){
+
+			canvasState.deleteFigure(selectedFigure);
+			selectedFigure = null;
+			redrawCanvas();
+
+	}
+
+	private void copyFormatFigure(){
+			copyFormat=new Format(selectedFigure.getFormat());
+	}
+
+	private void copyFigure(){
+			CopyFunction(Action.COPYFIGURE);
+			toCopyFigure=selectedFigure.centerFigure();
+	}
+
+	private void cutFigure(){
+		CopyFunction(Action.CUTFIGURE);
+		canvasState.deleteFigure(selectedFigure);
+		redrawCanvas();
+	}
+
+	private void CopyFunction(Action action){
+		canvasState.setToCopyFigure(selectedFigure.getCopy().centerFigure());
+		canvasState.addDone(canvasState.getToCopyFigure(),null,action);
+	}
 }

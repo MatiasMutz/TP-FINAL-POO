@@ -22,11 +22,15 @@ public class Change {
         return action;
     }*/
 
-    public void undo(){
-        action.undo(oldFigure,newFigure);
+    public void undo(CanvasState canvasState){
+        action.undo(canvasState,oldFigure,newFigure);
     }
 
-    public void redo(){
-        action.redo(oldFigure,newFigure);
+    public void redo(CanvasState canvasState){
+        action.redo(canvasState,oldFigure,newFigure);
+    }
+
+    public String toString(){
+        return action.getMessage((oldFigure!=null)?oldFigure:newFigure);
     }
 }
