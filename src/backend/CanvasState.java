@@ -18,20 +18,20 @@ public class CanvasState {
 
     public void addFigure(Figure figure) {
         list.add(figure);
-        addDone(figure,Action.ADD);
+        addDone(null,figure,Action.ADD);
     }
 
     public void deleteFigure(Figure figure) {
         list.remove(figure);
-        addDone(figure,Action.DELETE);
+        addDone(figure,null,Action.DELETE);
     }
 
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
     }
 
-    public void addDone(Figure figure,Action action){
-        done.add(new Change(figure,action));
+    public void addDone(Figure oldFigure,Figure newFigure,Action action){
+        done.add(new Change(oldFigure,newFigure,action));
     }
 
     public void removeDone(){

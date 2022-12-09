@@ -151,7 +151,9 @@ public class PaintPane extends BorderPane {
 						found = true;
 						selectedFigure = figure;
 						if(copyFormat!=null){
+							Figure oldFigure=selectedFigure.getCopy();
 							selectedFigure.setFormat(copyFormat);
+							canvasState.addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
 							copyFormat=null;
 						}
 						label.append(figure.toString());
@@ -190,7 +192,6 @@ public class PaintPane extends BorderPane {
 
 		copyFormatButton.setOnAction(event->{
 			if (selectedFigure!=null){
-				canvasState.addDone(selectedFigure.getCopy(),Action.COPYFORMAT);
 				copyFormat=new Format(selectedFigure.getFormat());
 			}
 
@@ -207,7 +208,8 @@ public class PaintPane extends BorderPane {
 
 		copyButton.setOnAction(event->{
 			if(selectedFigure!=null){
-				canvasState.addDone(selectedFigure.getCopy(),Action.COPYFIGURE);
+				Figure figure=selectedFigure.getCopy();
+				canvasState.addDone(figure,figure,Action.COPYFIGURE);
 				toCopyFigure=selectedFigure.centerFigure();
 			}
 		});
@@ -215,7 +217,7 @@ public class PaintPane extends BorderPane {
 		cutButton.setOnAction(event -> {
 			if(selectedFigure!=null){
 				toCopyFigure=selectedFigure.centerFigure();
-				canvasState.addDone(selectedFigure.getCopy(),Action.CUTFIGURE);
+				canvasState.addDone(selectedFigure.getCopy(),null,Action.CUTFIGURE);
 				canvasState.deleteFigure(selectedFigure);
 				redrawCanvas();
 			}
@@ -235,8 +237,9 @@ public class PaintPane extends BorderPane {
 
 	private void updateSelectedFormat(Figure selectedFigure, Action action){
 		if(selectedFigure!=null){
-			canvasState.addDone(selectedFigure.getCopy(),action);
+			Figure oldFigure=selectedFigure.getCopy();
 			selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
+			canvasState.addDone(oldFigure,selectedFigure.getCopy(),action);
 		}
 		redrawCanvas();
 	}
