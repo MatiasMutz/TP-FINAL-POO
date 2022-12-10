@@ -10,6 +10,13 @@ public class Rectangle extends Figure {
 
     public Rectangle(Point topLeft, Point bottomRight,Format format) {
         super(format);
+        defineRectangle(topLeft,bottomRight);
+    }
+    public Rectangle(Point topLeft, Point bottomRight,Format format,int figureID) {
+        super(format,figureID);
+        defineRectangle(topLeft,bottomRight);
+    }
+    private void defineRectangle (Point topLeft, Point bottomRight){
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
@@ -57,7 +64,7 @@ public class Rectangle extends Figure {
     }
     @Override
     public Figure getCopy(){
-        return new Rectangle(new Point(topLeft),new Point(bottomRight),new Format(getFormat()));
+        return new Rectangle(topLeft,bottomRight,new Format(getFormat()),getFigureID());
     }
 
     @Override
@@ -74,12 +81,11 @@ public class Rectangle extends Figure {
             return true;
         }
         Rectangle aux = (Rectangle) other;
-        return topLeft.equals(aux.getTopLeft()) && bottomRight.equals(aux.getBottomRight()) && getFormat().equals(aux.getFormat());
-    }
+        return getFigureID().equals(aux.getFigureID());    }
 
     @Override
     public int hashCode(){
-        return Objects.hash(topLeft, bottomRight);
+        return Objects.hash(getFigureID());
     }
 
 }

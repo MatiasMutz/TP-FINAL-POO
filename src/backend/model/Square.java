@@ -8,6 +8,11 @@ public class Square extends Rectangle {
         this.size=size;
     }
 
+    public Square(Point topLeft, double size,Format format,int figureID) {
+        super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size),format,figureID);
+        this.size=size;
+    }
+
     @Override
     public String toString() {
         return String.format("Cuadrado [ %s , %s ]", getTopLeft(), getBottomRight());
@@ -26,7 +31,7 @@ public class Square extends Rectangle {
     }
     @Override
     public Figure getCopy(){
-        return new Square(new Point(getTopLeft()),size,new Format(getFormat()));
+        return new Square(getTopLeft(),size,new Format(getFormat()),getFigureID());
     }
 /*
     public Double getSize(){

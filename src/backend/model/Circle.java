@@ -5,6 +5,9 @@ public class Circle extends Ellipse {
     public Circle(Point centerPoint, double radius,Format format) {
         super(centerPoint, radius*2, radius*2,format);
     }
+    public Circle(Point centerPoint, double radius,Format format,int figureID){
+        super(centerPoint, radius*2, radius*2,format,figureID);
+    }
 
     @Override
     public String toString() {
@@ -21,7 +24,7 @@ public class Circle extends Ellipse {
 
     @Override
     public Figure getCopy(){
-        return new Circle(new Point(getCenterPoint()),getRadius(),new Format(getFormat()));
+        return new Circle(getCenterPoint(),getRadius(),new Format(getFormat()),getFigureID());
     }
 
     @Override

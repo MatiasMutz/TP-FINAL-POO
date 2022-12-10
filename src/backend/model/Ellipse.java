@@ -7,10 +7,19 @@ import java.util.Objects;
 public class Ellipse extends Figure {
 
     private  Point centerPoint;
-    private final Double sMayorAxis, sMinorAxis;
+    private Double sMayorAxis, sMinorAxis;
 
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis,Format format) {
         super(format);
+        defineEllipse(centerPoint,sMayorAxis,sMinorAxis);
+    }
+
+    public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis, Format format, int figureID){
+        super(format,figureID);
+        defineEllipse(centerPoint,sMayorAxis,sMinorAxis);
+    }
+
+    private void defineEllipse(Point centerPoint, double sMayorAxis, double sMinorAxis){
         this.centerPoint = centerPoint;
         this.sMayorAxis = sMayorAxis;
         this.sMinorAxis = sMinorAxis;
@@ -59,7 +68,7 @@ public class Ellipse extends Figure {
 
     @Override
     public Figure getCopy(){
-        return new Ellipse(new Point(centerPoint),sMayorAxis,sMinorAxis,new Format(getFormat()));
+        return new Ellipse(centerPoint,sMayorAxis,sMinorAxis,new Format(getFormat()),getFigureID());
     }
     @Override
     public String getName(){
@@ -75,11 +84,11 @@ public class Ellipse extends Figure {
             return true;
         }
         Ellipse aux=(Ellipse) other;
-        return centerPoint.equals(aux.getCenterPoint()) && sMayorAxis.equals(aux.getsMayorAxis()) && sMinorAxis.equals(aux.getsMinorAxis()) && getFormat().equals(aux.getFormat());
+        return getFigureID().equals(aux.getFigureID());
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(centerPoint, sMayorAxis, sMinorAxis);
+        return Objects.hash(getFigureID());
     }
 }

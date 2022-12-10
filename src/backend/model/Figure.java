@@ -8,9 +8,19 @@ import java.util.Objects;
 public abstract class Figure {
 
      private Format format;
-
+     private Integer figureID;
+     static int ID=0;
      public Figure(Format format){
           setFormat(format);
+          updateID();
+          figureID=ID;
+     }
+     public Figure(Format format,int figureID){
+          this.format=format;
+          this.figureID=figureID;
+     }
+     private void updateID(){
+           ID++;
      }
      public void setFormat(Format format) {
           this.format = format;
@@ -43,8 +53,7 @@ public abstract class Figure {
 
      public abstract Figure getCopy();
 
-
-
-
-
+     public Integer getFigureID() {
+          return figureID;
+     }
 }

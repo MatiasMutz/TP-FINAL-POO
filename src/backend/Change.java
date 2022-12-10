@@ -3,6 +3,7 @@ package backend;
 import backend.model.Figure;
 
 public class Change {
+    //oldFigure, es la figura antes deel cambio, newFigure es la figura despuees del cambio
     private Figure oldFigure,newFigure;
     private Action action;
 
