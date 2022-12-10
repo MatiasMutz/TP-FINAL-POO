@@ -16,7 +16,7 @@ public class Square extends Rectangle {
 
     public Figure centerFigure(){
         Point auxTopLeft=new Point(400-(getBottomRight().getX()-getTopLeft().getX())/2,300+(getTopLeft().getY()- getBottomRight().getY())/2);
-        Point auxBottomRight=new Point(400+(getBottomRight().getX()-getTopLeft().getX())/2,300-(getTopLeft().getY()- getBottomRight().getY())/2);
+        //Point auxBottomRight=new Point(400+(getBottomRight().getX()-getTopLeft().getX())/2,300-(getTopLeft().getY()- getBottomRight().getY())/2);
         return new Square(auxTopLeft,size,getFormat());
     }
 
@@ -28,7 +28,7 @@ public class Square extends Rectangle {
     public Figure getCopy(){
         return new Square(new Point(getTopLeft()),size,new Format(getFormat()));
     }
-
+/*
     public Double getSize(){
         return size;
     }
@@ -44,4 +44,6 @@ public class Square extends Rectangle {
         Square aux = (Square) other;
         return getTopLeft().equals(aux.getTopLeft()) && getBottomRight().equals(aux.getBottomRight()) && size.equals(aux.getSize());
     }
+
+ */
 }

@@ -28,7 +28,7 @@ public class Circle extends Ellipse {
     public String getName(){
         return "Circulo";
     }
-
+/*
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Circle)){
@@ -41,5 +41,5 @@ public class Circle extends Ellipse {
         return getCenterPoint().equals(aux.getCenterPoint()) && getRadius().equals(aux.getRadius());
     }
 
-
+*/
 }

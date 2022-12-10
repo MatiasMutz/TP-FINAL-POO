@@ -2,6 +2,8 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Objects;
+
 public class Ellipse extends Figure {
 
     private  Point centerPoint;
@@ -74,5 +76,10 @@ public class Ellipse extends Figure {
         }
         Ellipse aux=(Ellipse) other;
         return centerPoint.equals(aux.getCenterPoint()) && sMayorAxis.equals(aux.getsMayorAxis()) && sMinorAxis.equals(aux.getsMinorAxis());
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(centerPoint, sMayorAxis, sMinorAxis);
     }
 }

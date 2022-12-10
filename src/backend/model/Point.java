@@ -1,5 +1,7 @@
 package backend.model;
 
+import java.util.Objects;
+
 public class Point {
 
     private Double x, y;
@@ -41,6 +43,11 @@ public class Point {
         }
         Point aux=(Point) other;
         return x.equals(aux.getX()) && y.equals(aux.getY());
-}
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(x, y);
+    }
 
 }

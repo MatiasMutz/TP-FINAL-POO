@@ -2,6 +2,8 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Objects;
+
 public class Rectangle extends Figure {
 
     private Point topLeft, bottomRight;
@@ -73,6 +75,11 @@ public class Rectangle extends Figure {
         }
         Rectangle aux = (Rectangle) other;
         return topLeft.equals(aux.getTopLeft()) && bottomRight.equals(aux.getBottomRight());
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(topLeft, bottomRight);
     }
 
 }

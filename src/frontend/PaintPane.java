@@ -2,30 +2,19 @@ package frontend;
 
 import backend.Action;
 import backend.CanvasState;
-import backend.Change;
 import backend.model.*;
 import backend.buttons.*;
-import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.transform.Translate;
-
-import java.util.ResourceBundle;
 
 public class PaintPane extends BorderPane {
 
@@ -58,7 +47,6 @@ public class PaintPane extends BorderPane {
 
 	private Format copyFormat=null;
 
-	Translate translate = new Translate();
 
 	// Dibujar una figura
 	Point startPoint;
