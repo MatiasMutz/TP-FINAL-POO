@@ -56,7 +56,7 @@ public class PaintPane extends BorderPane {
 	final ColorPicker fillColorPicker = new ColorPicker(Color.BLUE);
 	final Label coloredText = new Label("Colors");
 
-	private Format copyFormat=null, newFormat=null;
+	private Format copyFormat=null;
 
 	Translate translate = new Translate();
 
@@ -325,7 +325,7 @@ public class PaintPane extends BorderPane {
 
 	private void cutFigure(){
 		CopyFunction(Action.CUTFIGURE);
-		canvasState.deleteFigure(selectedFigure);
+		canvasState.removeVisual(selectedFigure);
 		redrawCanvas();
 	}
 
