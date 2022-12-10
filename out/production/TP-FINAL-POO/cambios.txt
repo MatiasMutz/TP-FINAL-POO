@@ -29,3 +29,10 @@ Agregamos clases para los botones, de ese modo, no tenemos que hacer tantos
  hacemos es revisar cual es el seleccionado
 
  Agregamos diseño de PaintPane (slider, texto y colorSelectors.
+
+
+
+
+ ERRORES:
+
+ Cuando tienen que volver a dibujar, no deja bien el color

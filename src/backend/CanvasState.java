@@ -31,7 +31,7 @@ public class CanvasState {
     //Agregar la figura al canvas y tambien la agrega a la lista de cambios por un undo o redo
     public void addFigure(Figure figure) {
         addVisual(figure);
-        addDone(null,figure,Action.ADD);
+        addDone(null,figure.getCopy(),Action.ADD);
     }
 
     //Agrega una figura completamente nueva, por lo tanto desaparecen los elementos a restaurar
@@ -49,7 +49,7 @@ public class CanvasState {
     //Borra el elemento de la pantalla pero por un undo o rdo
     public void removeFigure(Figure figure){
         removeVisual(figure);
-        addDone(figure,null,Action.DELETE);
+        addDone(figure.getCopy(),null,Action.DELETE);
     }
 
     //Accion nueeva, de borrado se pierde la posibilidad de redo si habia
