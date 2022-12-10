@@ -45,18 +45,6 @@ public class PaintPane extends BorderPane {
 	final ColorPicker fillColorPicker = new ColorPicker(Color.BLUE);
 	final Label coloredText = new Label("Colors");
 
-	private Format copyFormat=null;
-
-
-	// Dibujar una figura
-	Point startPoint;
-
-	// Seleccionar una figura
-	Figure selectedFigure;
-
-	// Figura a copiar
-	Figure toCopyFigure=null;
-
 	// StatusBar
 	StatusPane statusPane;
 
@@ -90,14 +78,17 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(50);
-		//----------------------- HASTA ACA CONFIG
 
 		canvas.setOnMousePressed(event -> {
-			startPoint = new Point(event.getX(), event.getY());
+			canvasState.setStartPoint(new Point(event.getX(), event.getY()));
+			//startPoint = new Point(event.getX(), event.getY());
 		});
 
 		canvas.setOnMouseReleased(event -> {
-			addNewFigure(event,toolsArr);
+			//addNewFigure(event,toolsArr);
+			canvasState.addNewFigure(event, toolsArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			redrawCanvas();
+
 		});
 
 		canvas.setOnMouseMoved(event -> {
@@ -109,43 +100,47 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			mouseDraggedonCanvas(event);
+			//mouseDraggedonCanvas(event);
+			if(selectionButton.isSelected()){
+				canvasState.mouseDraggedonCanvas(event);
+				redrawCanvas();
+			}
 		});
 
 		deleteButton.setOnAction(event -> {
-			if (selectedFigure != null) {
-				deleteFigure();
-			}
+			canvasState.deleteFigure();
+			redrawCanvas();
 		});
 
 		copyFormatButton.setOnAction(event->{
-			if (selectedFigure!=null) {
-				copyFormatFigure();
-			}
+			canvasState.copyFormatFigure();
 		});
 
 		//Cambia el formato si
-		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEBORDERCOLOR));
-		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEFILL));
-		slider.setOnMouseReleased(event -> updateSelectedFormat(selectedFigure,Action.CHANGEBORDER));
+		borderColorPicker.setOnAction(event-> {
+			canvasState.updateSelectedFormat(Action.CHANGEBORDERCOLOR, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			redrawCanvas();
+		});
+		fillColorPicker.setOnAction(event->{
+			canvasState.updateSelectedFormat(Action.CHANGEFILL, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			redrawCanvas();
+		});
+		slider.setOnMouseReleased(event -> {
+			canvasState.updateSelectedFormat(Action.CHANGEBORDER, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			redrawCanvas();
+		});
 
 		copyButton.setOnAction(event->{
-			if(selectedFigure!=null){
-				copyFigure();
-				redrawCanvas();
-			}
-
+			canvasState.copyFigure();
+			redrawCanvas();
 		});
 
 		cutButton.setOnAction(event -> {
-			if(selectedFigure!=null){
-				cutFigure();
-
-			}
+			canvasState.cutFigure();
+			redrawCanvas();
 		});
 
 		pasteButton.setOnAction(event -> {
-			toCopyFigure=canvasState.getToCopyFigure();
 			canvasState.pasteFigure();
 			redrawCanvas();
 		});
@@ -187,10 +182,10 @@ public class PaintPane extends BorderPane {
 		redrawCanvas();
 	}
 	void redrawCanvas() {
-		updateUndoPane();
+		canvasState.updateUndoPane(undoPane);
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+			if(figure == canvasState.getSelectedFigure()) {
 				gc.setStroke(Color.RED);
 			}
 			else {
@@ -199,39 +194,15 @@ public class PaintPane extends BorderPane {
 			gc.setFill(figure.getFormat().getFillColor());
 			gc.setLineWidth(figure.getFormat().getBorderWidth());
 			figure.redrawCanvas(gc);
-
-
 		}
 	}
-	boolean figureBelongs(Figure figure, Point eventPoint) {
-		boolean found = figure.figureBelongs(eventPoint);
-		return found;
-	}
 
-  	private void addNewFigure(MouseEvent event,SpecialButton[] toolsArr){
-		Point endPoint = new Point(event.getX(), event.getY());
-		if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-			return ;
-		}
-		Figure newFigure = null;
-		for(SpecialButton button: toolsArr){
-			if(button.isSelected()){
-				newFigure=button.newFigure(startPoint,endPoint,new Format(fillColorPicker.getValue(),borderColorPicker.getValue(),slider.getValue()));
-				if(newFigure!=null){
-					canvasState.addNewFigure(newFigure);
-					startPoint = null;
-					redrawCanvas();
-					return;
-				}
-			}
-		}
-	}
 	private void mouseMovedonCanvas(MouseEvent event){
 		Point eventPoint = new Point(event.getX(), event.getY());
 		boolean found = false;
 		StringBuilder label = new StringBuilder();
 		for(Figure figure : canvasState.figures()) {
-			if(figureBelongs(figure, eventPoint)) {
+			if(canvasState.figureBelongs(figure, eventPoint)) {
 				found = true;
 				label.append(figure.toString());
 			}
@@ -248,10 +219,9 @@ public class PaintPane extends BorderPane {
 			boolean found = false;
 			StringBuilder label = new StringBuilder("Se seleccionó: ");
 			for (Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
+				if(canvasState.figureBelongs(figure, eventPoint)) {
 					found = true;
-					selectedFigure = figure;
-					selectFigure(selectedFigure);
+					canvasState.selectFigure(figure);
 					label.append(figure.toString());
 				}
 			}
@@ -259,69 +229,12 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		}
 	}
-
-	private void selectFigure(Figure selectedFigure){
-		if(copyFormat!=null){
-			Figure oldFigure=selectedFigure.getCopy();
-			selectedFigure.setFormat(copyFormat);
-			canvasState.addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
-			copyFormat=null;
-		}
-	}
-
 	private void statusLabelFigureInfo(boolean found,StringBuilder label){
 		if (found) {
 			statusPane.updateStatus(label.toString());
 		} else {
-			selectedFigure = null;
+			canvasState.restartSelectedFigure();
 			statusPane.updateStatus("Ninguna figura encontrada");
 		}
 	}
-	private void mouseDraggedonCanvas(MouseEvent event){
-		if(selectionButton.isSelected()) {
-			Point eventPoint = new Point(event.getX(), event.getY());
-			double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-			double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-			if(selectedFigure!=null){
-				moveFigure(diffX,diffY);
-			}
-			redrawCanvas();
-		}
-	}
-	private void moveFigure(double diffX,double diffY){
-		selectedFigure.moveX(diffX);
-		selectedFigure.moveY(diffY);
-	}
-	private void deleteFigure(){
-
-			canvasState.deleteFigure(selectedFigure);
-			selectedFigure = null;
-			redrawCanvas();
-
-	}
-
-	private void copyFormatFigure(){
-			copyFormat=new Format(selectedFigure.getFormat());
-	}
-
-	private void copyFigure(){
-			CopyFunction(Action.COPYFIGURE);
-	}
-
-	private void cutFigure(){
-		CopyFunction(Action.CUTFIGURE);
-		canvasState.removeVisual(selectedFigure);
-		redrawCanvas();
-	}
-
-	private void CopyFunction(Action action){
-		canvasState.setToCopyFigure(selectedFigure.getCopy());
-		canvasState.addDone(selectedFigure.getCopy(),null,action);
-	}
-
-	private void updateUndoPane(){
-		undoPane.updateUndoPane(canvasState.getRedoMessage(),canvasState.toRedoAvailable(),canvasState.getUndoMessage(),canvasState.toUndoAvailable());
-	}
-
-	
 }

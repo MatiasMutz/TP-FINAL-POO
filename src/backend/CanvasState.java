@@ -1,16 +1,22 @@
 package backend;
 
+import backend.buttons.SpecialButton;
 import backend.model.Figure;
+import backend.model.Format;
+import backend.model.Point;
+import frontend.UndoPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.*;
 
 public class CanvasState {
-
-
-    private Figure toCopyFigure=null;
+    private Figure toCopyFigure = null, selectedFigure = null;
+    private Point startPoint = null;
+    private Format copyFormat = null;
     private final List<Figure> list = new ArrayList<>(); //Lo visual tal como aparece
 
     private LinkedList<Change> done= new LinkedList<>(); //Todos los pasos
@@ -154,11 +160,120 @@ public class CanvasState {
 
     public void pasteFigure(){
         if(toCopyFigure!=null){
-            Figure figure=toCopyFigure.centerFigure();
+            Figure figure = toCopyFigure.centerFigure();
             addVisual(figure);
             addDone(null,figure,Action.PASTEFIGURE);
             restartToCopyFigure();
             restartUndone();
         }
+    }
+
+
+    public boolean figureBelongs(Figure figure, Point eventPoint) {
+        boolean found = figure.figureBelongs(eventPoint);
+        return found;
+    }
+
+    public void addNewFigure(MouseEvent event, SpecialButton[] toolsArr, Color fill, Color border, double sliderValue){
+        Point endPoint = new Point(event.getX(), event.getY());
+        if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+            return ;
+        }
+        Figure newFigure = null;
+        for(SpecialButton button: toolsArr){
+            if(button.isSelected()){
+                newFigure=button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue));
+                if(newFigure!=null){
+                    addNewFigure(newFigure);
+                    startPoint = null;
+                    return;
+                }
+            }
+        }
+    }
+
+    public void selectFigure(Figure figure){
+        if(figure != null){
+            selectedFigure = figure;
+            if(copyFormat!=null){
+                Figure oldFigure=selectedFigure.getCopy();
+                selectedFigure.setFormat(copyFormat);
+                addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
+                copyFormat=null;
+            }
+        }
+    }
+
+    public void mouseDraggedonCanvas(MouseEvent event){
+        Point eventPoint = new Point(event.getX(), event.getY());
+        double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
+        double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+        if(selectedFigure!=null){
+            moveFigure(diffX,diffY);
+        }
+    }
+    public void moveFigure(double diffX,double diffY){
+        selectedFigure.moveX(diffX);
+        selectedFigure.moveY(diffY);
+    }
+    public void deleteFigure(){
+        if (selectedFigure != null) {
+            deleteFigure(selectedFigure);
+            selectedFigure = null;
+        }
+    }
+
+    public void copyFormatFigure(){
+        if(selectedFigure != null){
+            copyFormat = new Format(selectedFigure.getFormat());
+        }
+    }
+
+    public void copyFigure(){
+        CopyFunction(Action.COPYFIGURE);
+    }
+
+    public void cutFigure(){
+        CopyFunction(Action.CUTFIGURE);
+        removeVisual(selectedFigure);
+    }
+
+    private void CopyFunction(Action action){
+        if(selectedFigure != null){
+            setToCopyFigure(selectedFigure.getCopy());
+            addDone(selectedFigure.getCopy(),null,action);
+        }
+    }
+
+    public void updateUndoPane(UndoPane undoPane){
+        undoPane.updateUndoPane(getRedoMessage(), toRedoAvailable(), getUndoMessage(), toUndoAvailable());
+    }
+
+    public void updateSelectedFormat(Action action, Color fill, Color border, double sliderValue){
+        if(selectedFigure!=null){
+            Figure oldFigure=selectedFigure.getCopy();
+            action.updateSelectedFormat(selectedFigure,new Format(fill, border, sliderValue));
+            //selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
+            addDone(oldFigure,selectedFigure.getCopy(),action);
+            restartUndone();
+        }
+    }
+
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
+    }
+
+    public void restartStartPoint(){
+        startPoint = null;
+    }
+    public void restartSelectedFigure(){
+        selectedFigure = null;
+    }
+    public Figure getSelectedFigure() {
+        return selectedFigure;
+    }
+
+    public void setSelectedFigure(Figure selectedFigure) {
+        this.selectedFigure = selectedFigure;
     }
 }
