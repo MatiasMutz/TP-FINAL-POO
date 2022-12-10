@@ -42,7 +42,7 @@ public enum Action {
     CHANGEFILL("Cambiar el color de relleno de un "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            removeF1addF2(canvasState,oldFigure,newFigure);
+            Action.removeF1addF2(canvasState,oldFigure,newFigure);
         }
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {

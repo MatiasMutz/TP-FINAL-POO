@@ -110,7 +110,7 @@ public class CanvasState {
     }
     //----------------------------
     // Vacia la lista de desechos
-    private void restartUndone(){
+    public void restartUndone(){
         undone=new ArrayDeque<>();
     }
 
@@ -140,14 +140,14 @@ public class CanvasState {
     //Devuelve el mensaje que indica lo que se deshace
     public String getUndoMessage(){
         if (done.isEmpty()){
-            return "nada";
+            return "";
         }
         return done.peekLast().toString();
     }
     //Devuelve el mensaje que indica lo que se rehace
     public String getRedoMessage(){
         if (undone.isEmpty()){
-            return "nada";
+            return "";
         }
         return undone.peekLast().toString();
     }
