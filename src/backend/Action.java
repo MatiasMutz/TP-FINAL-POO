@@ -1,6 +1,7 @@
 package backend;
 
 import backend.model.Figure;
+import backend.model.Format;
 
 import java.util.List;
 
@@ -38,6 +39,10 @@ public enum Action {
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
+        @Override
+        public void updateSelectedFormat(Figure selectedFigure, Format newFormat){
+            selectedFigure.setBorderColor(newFormat.getBorderColor());
+        }
     },
     CHANGEFILL("Cambiar el color de relleno de un "){
         @Override
@@ -48,6 +53,10 @@ public enum Action {
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
+        @Override
+        public void updateSelectedFormat(Figure selectedFigure, Format newFormat){
+            selectedFigure.setFillColor(newFormat.getFillColor());
+        }
     },
     CHANGEBORDER("Cambiar el ancho del borde de un "){
         @Override
@@ -57,6 +66,10 @@ public enum Action {
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
+        }
+        @Override
+        public void updateSelectedFormat(Figure selectedFigure, Format newFormat){
+            selectedFigure.setBorderWidth(newFormat.getBorderWidth());
         }
     },
     COPYFORMAT("Copiar el formato de un "){
@@ -116,5 +129,9 @@ public enum Action {
     static private void removeF1addF2(CanvasState canvasState,Figure figure1,Figure figure2){
         canvasState.removeVisual(figure1);
         canvasState.addVisual(figure2);
+    }
+
+    public void updateSelectedFormat(Figure selectedFigure, Format newFormat){
+        return ;
     }
 }

@@ -1,6 +1,7 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
@@ -13,6 +14,16 @@ public abstract class Figure {
      }
      public void setFormat(Format format) {
           this.format = format;
+     }
+
+     public void setFillColor(Color fillColor){
+          format.setFillColor(fillColor);
+     }
+     public void setBorderColor(Color borderColor){
+          format.setBorderColor(borderColor);
+     }
+     public void setBorderWidth(double borderWidth){
+          format.setBorderWidth(borderWidth);
      }
 
      public Format getFormat(){

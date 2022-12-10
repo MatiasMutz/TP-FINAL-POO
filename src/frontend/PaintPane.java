@@ -193,7 +193,8 @@ public class PaintPane extends BorderPane {
 	private void updateSelectedFormat(Figure selectedFigure, Action action){
 		if(selectedFigure!=null){
 			Figure oldFigure=selectedFigure.getCopy();
-			selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
+			action.updateSelectedFormat(selectedFigure,new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
+			//selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
 			canvasState.addDone(oldFigure,selectedFigure.getCopy(),action);
 			canvasState.restartUndone();
 
