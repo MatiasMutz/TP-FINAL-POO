@@ -1,6 +1,5 @@
 package frontend;
 
-import backend.CanvasState;
 import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,14 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
-
-
 import java.util.Objects;
 import java.util.ResourceBundle;
-
-
 public class UndoPane extends BorderPane {
 
     private String redoMessage = "";
@@ -37,37 +30,23 @@ public class UndoPane extends BorderPane {
     private final Image redoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(redoIconPath)).toString());
     private final Button redoButton = new Button("Rehacer", new ImageView(redoIcon));
 
-    private final Button[] toolsArr = {undoButton, redoButton};
-
-
-
     public UndoPane(){
         HBox buttonsBox = new HBox(10);
+
+        Button[] toolsArr = {undoButton, redoButton};
 
         buttonsBox.getChildren().addAll(undoMessageLabel, undoLabel);
         buttonsBox.getChildren().addAll(toolsArr);
         buttonsBox.getChildren().addAll(redoLabel, redoMessageLabel);
         buttonsBox.setStyle("-fx-background-color: #999");
 
-        undoLabel.setAlignment(Pos.CENTER);
-        undoLabel.setStyle("-fx-font-size: 16");
-        undoLabel.setPrefWidth(30);
-
-        redoLabel.setAlignment(Pos.CENTER);
-        redoLabel.setStyle("-fx-font-size: 16");
-        redoLabel.setPrefWidth(30);
-
-        undoMessageLabel.setPrefWidth(300);
-        undoMessageLabel.setAlignment(Pos.CENTER_RIGHT);
-        undoMessageLabel.setStyle("-fx-font-size: 12");
-
-        redoMessageLabel.setPrefWidth(300);
-        redoMessageLabel.setAlignment(Pos.CENTER_LEFT);
-        redoMessageLabel.setStyle("-fx-font-size: 12");
+        setLabelVisual(undoLabel, 16, 30, Pos.CENTER);
+        setLabelVisual(redoLabel, 16, 30, Pos.CENTER);
+        setLabelVisual(undoMessageLabel, 12, 300, Pos.CENTER_RIGHT);
+        setLabelVisual(redoMessageLabel, 12, 300, Pos.CENTER_LEFT);
 
         setCenter(buttonsBox);
         buttonsBox.setAlignment(Pos.CENTER);
-
 
     }
 
@@ -84,5 +63,11 @@ public class UndoPane extends BorderPane {
 
     public Button getRedoButton() {
         return redoButton;
+    }
+
+    private void setLabelVisual(Label label, double fontSize, double prefWidth, Pos pos){
+        label.setAlignment(pos);
+        label.setStyle("-fx-font-size: " + fontSize);
+        label.setPrefWidth(prefWidth);
     }
 }
