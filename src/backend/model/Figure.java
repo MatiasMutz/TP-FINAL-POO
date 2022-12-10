@@ -2,6 +2,8 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Objects;
+
 public abstract class Figure {
 
      private Format format;
@@ -29,6 +31,10 @@ public abstract class Figure {
      public abstract String getName();
 
      public abstract Figure getCopy();
+
+     public String formatInfo(){
+          return format.toString();
+     }
 
 
 

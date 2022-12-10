@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Ellipse extends Figure {
 
     private  Point centerPoint;
-    private final double sMayorAxis, sMinorAxis;
+    private final Double sMayorAxis, sMinorAxis;
 
     public Ellipse(Point centerPoint, double sMayorAxis, double sMinorAxis,Format format) {
         super(format);
@@ -57,10 +57,22 @@ public class Ellipse extends Figure {
 
     @Override
     public Figure getCopy(){
-        return new Ellipse(centerPoint,sMayorAxis,sMinorAxis,getFormat());
+        return new Ellipse(new Point(centerPoint),sMayorAxis,sMinorAxis,new Format(getFormat()));
     }
     @Override
     public String getName(){
         return "Elipse";
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Ellipse)){
+            return false;
+        }
+        if(other==this){
+            return true;
+        }
+        Ellipse aux=(Ellipse) other;
+        return centerPoint.equals(aux.getCenterPoint()) && sMayorAxis.equals(aux.getsMayorAxis()) && sMinorAxis.equals(aux.getsMinorAxis());
     }
 }
