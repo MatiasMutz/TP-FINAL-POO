@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -17,23 +16,22 @@ public class CutCopyPastePane extends BorderPane {
 
     // Botones Barra Superior
 
-    String cutIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("cutIcon");
-    Image cutIcon = new Image(HTMLEditorSkin.class.getResource(cutIconPath).toString());
-    Button cutButton = new Button("Cortar", new ImageView(cutIcon));
+    private final String cutIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("cutIcon");
+    private final Image cutIcon = new Image(HTMLEditorSkin.class.getResource(cutIconPath).toString());
+    private final Button cutButton = new Button("Cortar", new ImageView(cutIcon));
 
-    String copyIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("copyIcon");
-    Image copyIcon = new Image(HTMLEditorSkin.class.getResource(copyIconPath).toString());
-    Button copyButton = new Button("Copiar", new ImageView(copyIcon));
+    private final String copyIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("copyIcon");
+    private final Image copyIcon = new Image(HTMLEditorSkin.class.getResource(copyIconPath).toString());
+    private final Button copyButton = new Button("Copiar", new ImageView(copyIcon));
 
-    String pasteIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("pasteIcon");
-    Image pasteIcon = new Image(HTMLEditorSkin.class.getResource(pasteIconPath).toString());
-    Button pasteButton = new Button("Pegar", new ImageView(pasteIcon));
+    private final String pasteIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("pasteIcon");
+    private final Image pasteIcon = new Image(HTMLEditorSkin.class.getResource(pasteIconPath).toString());
+    private final Button pasteButton = new Button("Pegar", new ImageView(pasteIcon));
 
-    private Button[] toolsArr = {cutButton, copyButton, pasteButton};
+    private final Button[] toolsArr = {cutButton, copyButton, pasteButton};
 
 
     public CutCopyPastePane() {
-        ToggleGroup tools = new ToggleGroup();
         for (Button tool : toolsArr) {
             tool.setMinWidth(90);
             tool.setCursor(Cursor.HAND);
@@ -43,9 +41,6 @@ public class CutCopyPastePane extends BorderPane {
         buttonsBox.setPadding(new Insets(5));
         buttonsBox.setStyle("-fx-background-color: #999");
         buttonsBox.setPrefWidth(100);
-
-
-
 
         setCenter(buttonsBox);
     }

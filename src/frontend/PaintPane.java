@@ -19,34 +19,32 @@ import javafx.scene.text.Font;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
-	CutCopyPastePane cutCopyPastePane;
-	UndoPane undoPane;
+	private final CanvasState canvasState;
+	private final CutCopyPastePane cutCopyPastePane;
+	private final UndoPane undoPane;
+	// StatusBar
+	private final StatusPane statusPane;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
+	private final Canvas canvas = new Canvas(800, 600);
+	private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	// Botones Barra Izquierda
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	SpecialButton rectangleButton = new RectangleButton("Rectángulo");
-	SpecialButton circleButton = new CircleButton("Círculo");
-	SpecialButton squareButton = new SquareButton("Cuadrado");
-	SpecialButton ellipseButton = new EllipseButton("Elipse");
-	ToggleButton deleteButton = new ToggleButton("Borrar");
+	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private final SpecialButton rectangleButton = new RectangleButton("Rectángulo");
+	private final SpecialButton circleButton = new CircleButton("Círculo");
+	private final SpecialButton squareButton = new SquareButton("Cuadrado");
+	private final SpecialButton ellipseButton = new EllipseButton("Elipse");
+	private final ToggleButton deleteButton = new ToggleButton("Borrar");
 
-	ToggleButton copyFormatButton = new ToggleButton("Cop. Form.");
+	private final ToggleButton copyFormatButton = new ToggleButton("Cop. Form.");
 
-	Label sliderLabel = new Label("Borde");
-	Label fillLabel = new Label("Relleno");
-	Slider slider = new Slider(1, 50, 10);
-	final ColorPicker borderColorPicker = new ColorPicker(Color.BLACK);
-	final ColorPicker fillColorPicker = new ColorPicker(Color.BLUE);
-	final Label coloredText = new Label("Colors");
-
-	// StatusBar
-	StatusPane statusPane;
+	private final Label sliderLabel = new Label("Borde");
+	private final Label fillLabel = new Label("Relleno");
+	private final Slider slider = new Slider(1, 50, 10);
+	private final ColorPicker borderColorPicker = new ColorPicker(Color.BLACK);
+	private final ColorPicker fillColorPicker = new ColorPicker(Color.BLUE);
+	private final Label coloredText = new Label("Colors");
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane,CutCopyPastePane cutCopyPastePane,UndoPane undoPane) {
 		this.canvasState = canvasState;
@@ -82,11 +80,9 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			canvasState.setStartPoint(new Point(event.getX(), event.getY()));
-			//startPoint = new Point(event.getX(), event.getY());
 		});
 
 		canvas.setOnMouseReleased(event -> {
-			//addNewFigure(event,toolsArr);
 			canvasState.addNewFigure(event, specialArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
 			redrawCanvas();
 
@@ -101,7 +97,6 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			//mouseDraggedonCanvas(event);
 			if(selectionButton.isSelected()){
 				canvasState.mouseDraggedonCanvas(event);
 				redrawCanvas();
@@ -194,7 +189,7 @@ public class PaintPane extends BorderPane {
 		for(Figure figure : canvasState.figures()) {
 			if(canvasState.figureBelongs(figure, eventPoint)) {
 				found = true;
-				label.append(figure.toString());
+				label.append(figure);
 			}
 		}
 		if(found) {
@@ -212,7 +207,7 @@ public class PaintPane extends BorderPane {
 				if(canvasState.figureBelongs(figure, eventPoint)) {
 					found = true;
 					canvasState.selectFigure(figure);
-					label.append(figure.toString());
+					label.append(figure);
 				}
 			}
 			statusLabelFigureInfo(found,label);

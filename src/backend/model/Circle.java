@@ -31,18 +31,5 @@ public class Circle extends Ellipse {
     public String getName(){
         return "Circulo";
     }
-/*
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Circle)){
-            return false;
-        }
-        if(other==this){
-            return true;
-        }
-        Circle aux=(Circle) other;
-        return getCenterPoint().equals(aux.getCenterPoint()) && getRadius().equals(aux.getRadius());
-    }
 
-*/
 }

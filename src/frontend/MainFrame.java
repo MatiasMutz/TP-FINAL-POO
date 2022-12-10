@@ -10,7 +10,7 @@ public class MainFrame extends VBox {
         StatusPane statusPane = new StatusPane();
         CutCopyPastePane cutCopyPastePane=new CutCopyPastePane();
         getChildren().add(cutCopyPastePane);
-        UndoPane undoPane=new UndoPane(canvasState);
+        UndoPane undoPane=new UndoPane();
         getChildren().add(undoPane);
         getChildren().add(new PaintPane(canvasState, statusPane,cutCopyPastePane,undoPane));
         getChildren().add(statusPane);

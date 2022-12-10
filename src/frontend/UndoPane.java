@@ -25,23 +25,23 @@ public class UndoPane extends BorderPane {
     private Integer redoTimes=0;
     private Integer undoTimes=0;
 
-    Label undoLabel = new Label(undoTimes.toString());
-    Label redoLabel = new Label(redoTimes.toString());
-    Label redoMessageLabel = new Label(redoMessage);
-    Label undoMessageLabel = new Label(undoMessage);
-    String undoIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("undoIcon");
-    Image undoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(undoIconPath)).toString());
-    Button undoButton = new Button("Deshacer", new ImageView(undoIcon));
+    private final Label undoLabel = new Label(undoTimes.toString());
+    private final Label redoLabel = new Label(redoTimes.toString());
+    private final Label redoMessageLabel = new Label(redoMessage);
+    private final Label undoMessageLabel = new Label(undoMessage);
+    private final String undoIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("undoIcon");
+    private final Image undoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(undoIconPath)).toString());
+    private final Button undoButton = new Button("Deshacer", new ImageView(undoIcon));
 
-    String redoIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("redoIcon");
-    Image redoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(redoIconPath)).toString());
-    Button redoButton = new Button("Rehacer", new ImageView(redoIcon));
+    private final String redoIconPath = ResourceBundle.getBundle(HTMLEditorSkin.class.getName()).getString("redoIcon");
+    private final Image redoIcon = new Image(Objects.requireNonNull(HTMLEditorSkin.class.getResource(redoIconPath)).toString());
+    private final Button redoButton = new Button("Rehacer", new ImageView(redoIcon));
 
-    Button[] toolsArr = {undoButton, redoButton};
+    private final Button[] toolsArr = {undoButton, redoButton};
 
 
 
-    public UndoPane(CanvasState canvasState){
+    public UndoPane(){
         HBox buttonsBox = new HBox(10);
 
         buttonsBox.getChildren().addAll(undoMessageLabel, undoLabel);
@@ -51,11 +51,11 @@ public class UndoPane extends BorderPane {
 
         undoLabel.setAlignment(Pos.CENTER);
         undoLabel.setStyle("-fx-font-size: 16");
-        undoLabel.setPrefWidth(20);
+        undoLabel.setPrefWidth(30);
 
         redoLabel.setAlignment(Pos.CENTER);
         redoLabel.setStyle("-fx-font-size: 16");
-        redoLabel.setPrefWidth(20);
+        redoLabel.setPrefWidth(30);
 
         undoMessageLabel.setPrefWidth(300);
         undoMessageLabel.setAlignment(Pos.CENTER_RIGHT);
