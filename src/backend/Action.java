@@ -29,7 +29,7 @@ public enum Action {
             canvasState.addVisual(oldFigure);
         }
     },
-    CHANGEBORDERCOLOR("Cambiar el color de borde de un"){
+    CHANGEBORDERCOLOR("Cambiar el color de borde de un "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
             removeF1addF2(canvasState,oldFigure,newFigure);
@@ -39,7 +39,7 @@ public enum Action {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
     },
-    CHANGEFILL("Cambiar el color de relleno de un"){
+    CHANGEFILL("Cambiar el color de relleno de un "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
             removeF1addF2(canvasState,oldFigure,newFigure);
@@ -49,7 +49,7 @@ public enum Action {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
     },
-    CHANGEBORDER("Cambiar el ancho del borde de un"){
+    CHANGEBORDER("Cambiar el ancho del borde de un "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
             removeF1addF2(canvasState,oldFigure,newFigure);
@@ -59,7 +59,7 @@ public enum Action {
             Action.removeF1addF2(canvasState,newFigure,oldFigure);
         }
     },
-    COPYFORMAT("Copiar el formato de un"){
+    COPYFORMAT("Copiar el formato de un "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
             removeF1addF2(canvasState,oldFigure,newFigure);

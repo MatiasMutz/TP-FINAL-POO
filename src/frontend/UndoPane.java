@@ -19,8 +19,8 @@ import java.util.ResourceBundle;
 
 public class UndoPane extends BorderPane {
 
-    private String redoMessage = "nada";
-    private String undoMessage = "nada";
+    private String redoMessage = "";
+    private String undoMessage = "";
 
     private Integer redoTimes=0;
     private Integer undoTimes=0;
