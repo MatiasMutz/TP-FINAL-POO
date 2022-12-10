@@ -74,7 +74,7 @@ public class Rectangle extends Figure {
             return true;
         }
         Rectangle aux = (Rectangle) other;
-        return topLeft.equals(aux.getTopLeft()) && bottomRight.equals(aux.getBottomRight());
+        return topLeft.equals(aux.getTopLeft()) && bottomRight.equals(aux.getBottomRight()) && getFormat().equals(aux.getFormat());
     }
 
     @Override

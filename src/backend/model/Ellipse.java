@@ -75,7 +75,7 @@ public class Ellipse extends Figure {
             return true;
         }
         Ellipse aux=(Ellipse) other;
-        return centerPoint.equals(aux.getCenterPoint()) && sMayorAxis.equals(aux.getsMayorAxis()) && sMinorAxis.equals(aux.getsMinorAxis());
+        return centerPoint.equals(aux.getCenterPoint()) && sMayorAxis.equals(aux.getsMayorAxis()) && sMinorAxis.equals(aux.getsMinorAxis()) && getFormat().equals(aux.getFormat());
     }
 
     @Override

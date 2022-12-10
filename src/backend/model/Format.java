@@ -2,9 +2,11 @@ package backend.model;
 
 import javafx.scene.paint.Color;
 
+import java.util.Objects;
+
 public class Format {
     private Color fillColor,borderColor;
-    private double borderWidth;
+    private Double borderWidth;
 
     public Format(Color fillColor,Color borderColor,double borderWidth){
         setBorderColor(borderColor);
@@ -37,7 +39,27 @@ public class Format {
         this.borderWidth=borderWidth;
     }
 
+
+
     public String toString(){
         return String.format("[%s %s %f] ",fillColor.toString(),borderColor.toString(), borderWidth);
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Format)){
+            return false;
+        }
+        if(this == other){
+            return true;
+        }
+        Format aux = (Format) other;
+        return fillColor.equals(aux.getFillColor()) && borderColor.equals(aux.getBorderColor()) && borderWidth.equals(aux.getBorderWidth());
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(fillColor, borderColor, borderWidth);
+    }
+
 }

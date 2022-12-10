@@ -36,3 +36,7 @@ Agregamos clases para los botones, de ese modo, no tenemos que hacer tantos
  ERRORES:
 
 A BEN le quedan cosas aunque aparece que no hay nada para deshacer
+
+ROMPI TODO POR CULPA DE BEN al hacer y deshacer se me aparecio una pieza por tocar la pantalla
+
+no habría que agregar los format en el equals?
