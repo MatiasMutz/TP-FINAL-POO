@@ -178,9 +178,7 @@ public class PaintPane extends BorderPane {
 
 		undoButton.setOnAction(event -> {
 			canvasState.undo();
-
 			redrawCanvas();
-			System.out.println("HOLA");
 		});
 
 		redoButton.setOnAction(event -> {

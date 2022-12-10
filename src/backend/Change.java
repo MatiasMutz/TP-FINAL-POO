@@ -34,7 +34,4 @@ public class Change {
         return action.getMessage((oldFigure!=null)?oldFigure:newFigure);
     }
 
-    public String getInfo(){
-        return oldFigure.formatInfo() + " " + newFigure.formatInfo();
-    }
 }

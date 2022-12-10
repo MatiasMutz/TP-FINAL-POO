@@ -31,10 +31,7 @@ public abstract class Figure {
      public abstract String getName();
 
      public abstract Figure getCopy();
-
-     public String formatInfo(){
-          return format.toString();
-     }
+     
 
 
 
