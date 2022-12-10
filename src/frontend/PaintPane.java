@@ -330,7 +330,7 @@ public class PaintPane extends BorderPane {
 
 	private void CopyFunction(Action action){
 		canvasState.setToCopyFigure(selectedFigure.getCopy());
-		canvasState.addDone(selectedFigure,null,action);
+		canvasState.addDone(selectedFigure.getCopy(),null,action);
 	}
 
 	private void updateUndoPane(){
