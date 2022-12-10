@@ -170,17 +170,6 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	private void updateSelectedFormat(Figure selectedFigure, Action action){
-		if(selectedFigure!=null){
-			Figure oldFigure=selectedFigure.getCopy();
-			action.updateSelectedFormat(selectedFigure,new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
-			//selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
-			canvasState.addDone(oldFigure,selectedFigure.getCopy(),action);
-			canvasState.restartUndone();
-
-		}
-		redrawCanvas();
-	}
 	void redrawCanvas() {
 		canvasState.updateUndoPane(undoPane);
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
