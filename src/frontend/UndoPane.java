@@ -54,8 +54,13 @@ public class UndoPane extends BorderPane {
 
         redoLabel.setAlignment(Pos.CENTER);
         redoLabel.setStyle("-fx-font-size: 16");
-        redoMessageLabel.setStyle("-fx-font-size: 16");
-        undoMessageLabel.setStyle("-fx-font-size: 16");
+        redoMessageLabel.setStyle("-fx-font-size: 12");
+        undoMessageLabel.setStyle("-fx-font-size: 12");
+
+        redoMessageLabel.setPrefWidth(300);
+        undoMessageLabel.setPrefWidth(300);
+        undoMessageLabel.setAlignment(Pos.CENTER_RIGHT);
+        redoMessageLabel.setAlignment(Pos.CENTER_LEFT);
 
         setCenter(buttonsBox);
         buttonsBox.setAlignment(Pos.CENTER);
