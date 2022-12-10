@@ -146,11 +146,8 @@ public class PaintPane extends BorderPane {
 
 		pasteButton.setOnAction(event -> {
 			toCopyFigure=canvasState.getToCopyFigure();
-			if(toCopyFigure!=null){
-				canvasState.addFigure(toCopyFigure.centerFigure());
-				canvasState.restartToCopyFigure();
-				redrawCanvas();
-			}
+			canvasState.pasteFigure();
+			redrawCanvas();
 		});
 
 		setOnKeyPressed(event -> {

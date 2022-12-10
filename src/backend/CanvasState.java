@@ -152,5 +152,13 @@ public class CanvasState {
         return undone.peekLast().toString();
     }
 
-
+    public void pasteFigure(){
+        if(toCopyFigure!=null){
+            Figure figure=toCopyFigure.centerFigure();
+            addVisual(figure);
+            addDone(null,figure,Action.PASTEFIGURE);
+            restartToCopyFigure();
+            restartUndone();
+        }
+    }
 }
