@@ -55,7 +55,7 @@ public class Rectangle extends Figure {
     }
     @Override
     public Figure getCopy(){
-        return new Rectangle(topLeft,bottomRight,getFormat());
+        return new Rectangle(new Point(topLeft),new Point(bottomRight),new Format(getFormat()));
     }
 
     @Override

@@ -159,7 +159,7 @@ public class PaintPane extends BorderPane {
 		pasteButton.setOnAction(event -> {
 			toCopyFigure=canvasState.getToCopyFigure();
 			if(toCopyFigure!=null){
-				canvasState.addFigure(toCopyFigure);
+				canvasState.addFigure(toCopyFigure.centerFigure());
 				canvasState.restartToCopyFigure();
 				redrawCanvas();
 			}
@@ -178,12 +178,16 @@ public class PaintPane extends BorderPane {
 
 		undoButton.setOnAction(event -> {
 			canvasState.undo();
+
 			redrawCanvas();
+			System.out.println("HOLA");
 		});
+
 		redoButton.setOnAction(event -> {
 			canvasState.redo();
 			redrawCanvas();
 		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
@@ -193,6 +197,8 @@ public class PaintPane extends BorderPane {
 			Figure oldFigure=selectedFigure.getCopy();
 			selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
 			canvasState.addDone(oldFigure,selectedFigure.getCopy(),action);
+			canvasState.restartUndone();
+
 		}
 		redrawCanvas();
 	}

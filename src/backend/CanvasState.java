@@ -13,9 +13,9 @@ public class CanvasState {
     private Figure toCopyFigure=null;
     private final List<Figure> list = new ArrayList<>(); //Lo visual tal como aparece
 
-    private ArrayDeque<Change> done= new ArrayDeque<>(); //Todos los pasos
+    private LinkedList<Change> done= new LinkedList<>(); //Todos los pasos
 
-    private ArrayDeque<Change> undone=new ArrayDeque<>(); //Todo lo deshecho
+    private LinkedList<Change> undone=new LinkedList<>(); //Todo lo deshecho
 
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
@@ -81,14 +81,14 @@ public class CanvasState {
         if (done.isEmpty()){
             return null;
         }
-        return done.pollLast();
+        return done.removeLast();
     }
     //Quita el ultimo elemento de la lista de desechos si es que hay
     private Change getLastUndone(){
         if (undone.isEmpty()){
             return null;
         }
-        return undone.pollLast();
+        return undone.removeLast();
     }
     //-----------------------------------
     //Deshace el ultimo cambio
@@ -110,8 +110,8 @@ public class CanvasState {
     }
     //----------------------------
     // Vacia la lista de desechos
-    private void restartUndone(){
-        undone=new ArrayDeque<>();
+    public void restartUndone(){
+        undone=new LinkedList<>();
     }
 
     //Devuelve la figura que esta para ser copiada
@@ -140,14 +140,14 @@ public class CanvasState {
     //Devuelve el mensaje que indica lo que se deshace
     public String getUndoMessage(){
         if (done.isEmpty()){
-            return "nada";
+            return "";
         }
         return done.peekLast().toString();
     }
     //Devuelve el mensaje que indica lo que se rehace
     public String getRedoMessage(){
         if (undone.isEmpty()){
-            return "nada";
+            return "";
         }
         return undone.peekLast().toString();
     }

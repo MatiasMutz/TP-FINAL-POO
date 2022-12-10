@@ -11,7 +11,7 @@ public class Circle extends Ellipse {
         return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getRadius());
     }
 
-    public double getRadius() {
+    public Double getRadius() {
         return getsMayorAxis()/2;
     }
     @Override
@@ -21,11 +21,25 @@ public class Circle extends Ellipse {
 
     @Override
     public Figure getCopy(){
-        return new Circle(getCenterPoint(),getRadius(),getFormat());
+        return new Circle(new Point(getCenterPoint()),getRadius(),new Format(getFormat()));
     }
 
     @Override
     public String getName(){
         return "Circulo";
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Circle)){
+            return false;
+        }
+        if(other==this){
+            return true;
+        }
+        Circle aux=(Circle) other;
+        return getCenterPoint().equals(aux.getCenterPoint()) && getRadius().equals(aux.getRadius());
+    }
+
+
 }

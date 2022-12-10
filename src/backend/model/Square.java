@@ -26,7 +26,7 @@ public class Square extends Rectangle {
     }
     @Override
     public Figure getCopy(){
-        return new Square(getTopLeft(),size,getFormat());
+        return new Square(new Point(getTopLeft()),size,new Format(getFormat()));
     }
 
     public Double getSize(){

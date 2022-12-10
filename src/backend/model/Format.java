@@ -36,4 +36,8 @@ public class Format {
     public void setBorderWidth(double borderWidth){
         this.borderWidth=borderWidth;
     }
+
+    public String toString(){
+        return String.format("[%s %s %f] ",fillColor.toString(),borderColor.toString(), borderWidth);
+    }
 }
