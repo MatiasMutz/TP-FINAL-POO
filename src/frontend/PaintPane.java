@@ -139,11 +139,7 @@ public class PaintPane extends BorderPane {
 		//Cambia el formato si
 		borderColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEBORDERCOLOR));
 		fillColorPicker.setOnAction(event->updateSelectedFormat(selectedFigure,Action.CHANGEFILL));
-		slider.valueProperty().addListener(new ChangeListener<Number>(){
-			public void changed(ObservableValue<?extends Number> observable, Number oldValue, Number newValue){
-				updateSelectedFormat(selectedFigure,Action.CHANGEBORDER);
-			}
-		});
+		slider.setOnMouseReleased(event -> updateSelectedFormat(selectedFigure,Action.CHANGEBORDER));
 
 		copyButton.setOnAction(event->{
 			if(selectedFigure!=null){
