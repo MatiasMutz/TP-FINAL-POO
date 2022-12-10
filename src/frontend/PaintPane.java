@@ -29,14 +29,14 @@ public class PaintPane extends BorderPane {
 	Color lineColor = Color.BLACK;
 
 	// Botones Barra Izquierda
-	SpecialButton selectionButton = new SpecialButton("Seleccionar");
+	ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	SpecialButton rectangleButton = new RectangleButton("Rectángulo");
 	SpecialButton circleButton = new CircleButton("Círculo");
 	SpecialButton squareButton = new SquareButton("Cuadrado");
 	SpecialButton ellipseButton = new EllipseButton("Elipse");
-	SpecialButton deleteButton = new SpecialButton("Borrar");
+	ToggleButton deleteButton = new ToggleButton("Borrar");
 
-	SpecialButton copyFormatButton=new SpecialButton("Cop. Form.");
+	ToggleButton copyFormatButton = new ToggleButton("Cop. Form.");
 
 	Label sliderLabel = new Label("Borde");
 	Label fillLabel = new Label("Relleno");
@@ -51,17 +51,18 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane,CutCopyPastePane cutCopyPastePane,UndoPane undoPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		this.cutCopyPastePane=cutCopyPastePane;
-		this.undoPane=undoPane;
+		this.cutCopyPastePane = cutCopyPastePane;
+		this.undoPane = undoPane;
 
-		Button cutButton=cutCopyPastePane.getCutButton();
-		Button copyButton=cutCopyPastePane.getCopyButton();
-		Button pasteButton=cutCopyPastePane.getPasteButton();
+		Button cutButton = cutCopyPastePane.getCutButton();
+		Button copyButton = cutCopyPastePane.getCopyButton();
+		Button pasteButton = cutCopyPastePane.getPasteButton();
 
-		Button undoButton=undoPane.getUndoButton();
-		Button redoButton=undoPane.getRedoButton();
+		Button undoButton = undoPane.getUndoButton();
+		Button redoButton = undoPane.getRedoButton();
 
-		SpecialButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton,copyFormatButton};
+		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton, copyFormatButton};
+		SpecialButton[] specialArr = {rectangleButton, circleButton, squareButton, ellipseButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -86,7 +87,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseReleased(event -> {
 			//addNewFigure(event,toolsArr);
-			canvasState.addNewFigure(event, toolsArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			canvasState.addNewFigure(event, specialArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
 			redrawCanvas();
 
 		});

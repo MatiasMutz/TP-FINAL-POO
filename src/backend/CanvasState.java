@@ -19,9 +19,9 @@ public class CanvasState {
     private Format copyFormat = null;
     private final List<Figure> list = new ArrayList<>(); //Lo visual tal como aparece
 
-    private LinkedList<Change> done= new LinkedList<>(); //Todos los pasos
+    private LinkedList<Change> done = new LinkedList<>(); //Todos los pasos
 
-    private LinkedList<Change> undone=new LinkedList<>(); //Todo lo deshecho
+    private LinkedList<Change> undone = new LinkedList<>(); //Todo lo deshecho
 
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
@@ -99,7 +99,7 @@ public class CanvasState {
     //-----------------------------------
     //Deshace el ultimo cambio
     public void undo(){
-        Change change=getLastDone();
+        Change change = getLastDone();
         if(change!=null){
             change.undo(this);
             addUndone(change);
@@ -108,7 +108,7 @@ public class CanvasState {
 
     //Rehace el ultimo cambio que fue desecho
     public void redo(){
-        Change change=getLastUndone();
+        Change change = getLastUndone();
         if (change!=null){
             change.redo(this);
             addDone(change);
@@ -126,7 +126,7 @@ public class CanvasState {
     }
     //Setea la figura que esta para ser copiada
     public void setToCopyFigure(Figure figure){
-        toCopyFigure=figure;
+        toCopyFigure = figure;
     }
 
     //Deja vacia la figura que esta para ser copiada, osea no hay nada para copiar
@@ -168,7 +168,6 @@ public class CanvasState {
         }
     }
 
-
     public boolean figureBelongs(Figure figure, Point eventPoint) {
         boolean found = figure.figureBelongs(eventPoint);
         return found;
@@ -182,12 +181,9 @@ public class CanvasState {
         Figure newFigure = null;
         for(SpecialButton button: toolsArr){
             if(button.isSelected()){
-                newFigure=button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue));
-                if(newFigure!=null){
-                    addNewFigure(newFigure);
-                    startPoint = null;
-                    return;
-                }
+                addNewFigure(button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue)));
+                restartStartPoint();
+                return;
             }
         }
     }
@@ -199,7 +195,7 @@ public class CanvasState {
                 Figure oldFigure=selectedFigure.getCopy();
                 selectedFigure.setFormat(copyFormat);
                 addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
-                copyFormat=null;
+                restartCopyFormat();
             }
         }
     }
@@ -219,7 +215,7 @@ public class CanvasState {
     public void deleteFigure(){
         if (selectedFigure != null) {
             deleteFigure(selectedFigure);
-            selectedFigure = null;
+            restartSelectedFigure();
         }
     }
 
@@ -268,6 +264,9 @@ public class CanvasState {
     }
     public void restartSelectedFigure(){
         selectedFigure = null;
+    }
+    public void restartCopyFormat(){
+        copyFormat = null;
     }
     public Figure getSelectedFigure() {
         return selectedFigure;
