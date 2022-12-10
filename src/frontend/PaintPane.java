@@ -323,4 +323,5 @@ public class PaintPane extends BorderPane {
 		undoPane.updateUndoPane(canvasState.getRedoMessage(),canvasState.toRedoAvailable(),canvasState.getUndoMessage(),canvasState.toUndoAvailable());
 	}
 
+	
 }
