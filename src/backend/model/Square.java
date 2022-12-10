@@ -2,7 +2,7 @@ package backend.model;
 
 public class Square extends Rectangle {
 
-    private double size;
+    private Double size;
     public Square(Point topLeft, double size,Format format) {
         super(topLeft,new Point(topLeft.getX() + size, topLeft.getY() + size),format);
         this.size=size;
@@ -27,5 +27,21 @@ public class Square extends Rectangle {
     @Override
     public Figure getCopy(){
         return new Square(getTopLeft(),size,getFormat());
+    }
+
+    public Double getSize(){
+        return size;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Square)){
+            return false;
+        }
+        if(this == other){
+            return true;
+        }
+        Square aux = (Square) other;
+        return getTopLeft().equals(aux.getTopLeft()) && getBottomRight().equals(aux.getBottomRight()) && size.equals(aux.getSize());
     }
 }

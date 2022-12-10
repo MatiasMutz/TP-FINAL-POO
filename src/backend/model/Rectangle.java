@@ -63,4 +63,16 @@ public class Rectangle extends Figure {
         return "Rectangulo";
     }
 
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Rectangle)){
+            return false;
+        }
+        if(this == other){
+            return true;
+        }
+        Rectangle aux = (Rectangle) other;
+        return topLeft.equals(aux.getTopLeft()) && bottomRight.equals(aux.getBottomRight());
+    }
+
 }
