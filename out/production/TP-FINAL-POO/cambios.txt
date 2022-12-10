@@ -39,4 +39,6 @@ A BEN le quedan cosas aunque aparece que no hay nada para deshacer
 
 ROMPI TODO POR CULPA DE BEN al hacer y deshacer se me aparecio una pieza por tocar la pantalla
 
+el UNDO tambien hace undo sobre la posición de la figura, segun Franco esto no debería pasar
+
 no habría que agregar los format en el equals?
