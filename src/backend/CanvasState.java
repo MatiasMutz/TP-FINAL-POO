@@ -13,22 +13,19 @@ public class CanvasState {
     private Figure toCopyFigure=null;
     private final List<Figure> list = new ArrayList<>(); //Lo visual tal como aparece
 
-    private LinkedList<Change> done= new LinkedList<>(); //Todos los pasos
+    private ArrayDeque<Change> done= new ArrayDeque<>(); //Todos los pasos
 
-    private LinkedList<Change> undone=new LinkedList<>(); //Todo lo deshecho
+    private ArrayDeque<Change> undone=new ArrayDeque<>(); //Todo lo deshecho
 
     public Iterable<Figure> figures() {
         return new ArrayList<>(list);
     }
 
+    //-------------------------
+
     //Agrega la figura al canvas
     public void addVisual(Figure figure){
         list.add(figure);
-    }
-
-    //Borra la figura del canvas
-    public void removeVisual(Figure figure){
-        list.remove(figure);
     }
 
     //Agregar la figura al canvas y tambien la agrega a la lista de cambios por un undo o redo
@@ -43,6 +40,11 @@ public class CanvasState {
         restartUndone();
 
     }
+    //-----------------------------
+    //Borra la figura del canvas
+    public void removeVisual(Figure figure){
+        list.remove(figure);
+    }
 
     //Borra el elemento de la pantalla pero por un undo o rdo
     public void removeFigure(Figure figure){
@@ -56,6 +58,8 @@ public class CanvasState {
         restartUndone();
     }
 
+    //------------------------------
+
     //Agrega un cambio a la lista de cambios
     public void addDone(Figure oldFigure,Figure newFigure,Action action){
         done.add(new Change(oldFigure,newFigure,action));
@@ -63,7 +67,7 @@ public class CanvasState {
     public void addDone(Change change){
         done.add(change);
     }
-
+    //-------------------------------------
     //Agrega un cambio a la lista de deshechos
     public void addUndone(Figure oldFigure,Figure newFigure,Action action){
         undone.add(new Change(oldFigure,newFigure,action));
@@ -71,22 +75,22 @@ public class CanvasState {
     public void addUndone(Change change){
         undone.add(change);
     }
-
+    //--------------------------------------
     //Quita el ultimo elemento de la lista de cambios si es que hay
     private Change getLastDone(){
         if (done.isEmpty()){
             return null;
         }
-        return done.removeLast();
+        return done.pollLast();
     }
     //Quita el ultimo elemento de la lista de desechos si es que hay
     private Change getLastUndone(){
         if (undone.isEmpty()){
             return null;
         }
-        return undone.removeLast();
+        return undone.pollLast();
     }
-
+    //-----------------------------------
     //Deshace el ultimo cambio
     public void undo(){
         Change change=getLastDone();
@@ -104,10 +108,10 @@ public class CanvasState {
             addDone(change);
         }
     }
-
+    //----------------------------
     // Vacia la lista de desechos
     private void restartUndone(){
-        undone=new LinkedList<>();
+        undone=new ArrayDeque<>();
     }
 
     //Devuelve la figura que esta para ser copiada
@@ -132,7 +136,7 @@ public class CanvasState {
     public int toRedoAvailable(){
         return undone.size();
     }
-
+    //-------------------------
     //Devuelve el mensaje que indica lo que se deshace
     public String getUndoMessage(){
         if (done.isEmpty()){
