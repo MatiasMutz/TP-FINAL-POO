@@ -4,7 +4,6 @@ import com.sun.javafx.scene.web.skin.HTMLEditorSkin;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -28,10 +27,9 @@ public class CutCopyPastePane extends BorderPane {
     private final Image pasteIcon = new Image(HTMLEditorSkin.class.getResource(pasteIconPath).toString());
     private final Button pasteButton = new Button("Pegar", new ImageView(pasteIcon));
 
-    private final Button[] toolsArr = {cutButton, copyButton, pasteButton};
-
-
     public CutCopyPastePane() {
+        Button[] toolsArr = {cutButton, copyButton, pasteButton};
+
         for (Button tool : toolsArr) {
             tool.setMinWidth(90);
             tool.setCursor(Cursor.HAND);

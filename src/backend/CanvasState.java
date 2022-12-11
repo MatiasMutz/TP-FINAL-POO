@@ -5,10 +5,6 @@ import backend.model.Figure;
 import backend.model.Format;
 import backend.model.Point;
 import frontend.UndoPane;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -170,8 +166,7 @@ public class CanvasState {
     }
 
     public boolean figureBelongs(Figure figure, Point eventPoint) {
-        boolean found = figure.figureBelongs(eventPoint);
-        return found;
+        return figure.figureBelongs(eventPoint);
     }
 
     public void addNewFigure(MouseEvent event, SpecialButton[] toolsArr, Color fill, Color border, double sliderValue){

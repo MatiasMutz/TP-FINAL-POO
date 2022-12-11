@@ -3,8 +3,6 @@ package backend;
 import backend.model.Figure;
 import backend.model.Format;
 
-import java.util.List;
-
 public enum Action {
 
     ADD("Dibujar un "){
@@ -116,7 +114,7 @@ public enum Action {
         }
     };
 
-    private String message;
+    private final String message;
     Action(String message){
         this.message = message;
     }

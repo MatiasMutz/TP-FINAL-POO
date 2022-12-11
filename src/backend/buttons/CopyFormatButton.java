@@ -2,7 +2,6 @@ package backend.buttons;
 
 import backend.CanvasState;
 import backend.model.Figure;
-import javafx.scene.control.ToggleButton;
 
 public class CopyFormatButton extends ClickableButton {
 

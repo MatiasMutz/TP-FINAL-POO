@@ -1,6 +1,5 @@
 package backend.buttons;
 
-import backend.CanvasState;
 import backend.model.Figure;
 import backend.model.Format;
 import backend.model.Point;

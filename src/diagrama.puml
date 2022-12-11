@@ -110,7 +110,6 @@ class CircleButton extends SpecialButton{
 class CutCopyPastePane {
   + CutCopyPastePane():
   - pasteIconPath: String
-  - toolsArr: Button[]
   - cutIcon: Image
   - copyIconPath: String
   - cutIconPath: String

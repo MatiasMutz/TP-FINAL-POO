@@ -12,17 +12,6 @@ public class Change {
         this.newFigure=newFigure;
         this.action=action;
     }
-
-   /* public Figure getOldFigure(){
-        return oldFigure;
-    }
-
-    public Figure getNewFigure(){return newFigure;}
-
-    public Action getAction(){
-        return action;
-    }*/
-
     public void undo(CanvasState canvasState){
         action.undo(canvasState,oldFigure,newFigure);
     }
