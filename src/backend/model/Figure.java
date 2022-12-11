@@ -7,7 +7,7 @@ public abstract class Figure {
 
      private Format format;
      private Integer figureID;
-     static int ID=0;
+     private static int ID=0;
      public Figure(Format format){
           setFormat(format);
           updateID();

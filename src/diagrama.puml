@@ -1,0 +1,308 @@
+@startuml diagrama
+
+enum Action{
+  - Action(String):
+  + CHANGEBORDER
+  + DELETE
+  + COPYFIGURE
+  + CHANGEFILL
+  + ADD
+  + CHANGEBORDERCOLOR
+  + COPYFORMAT
+  + CUTFIGURE:
+  + PASTEFIGURE
+  + getMessage(Figure): String
+  + valueOf(String): Action
+  - message: String
+  + undo(CanvasState, Figure, Figure): void
+  + updateSelectedFormat(Figure, Format): void
+  - removeF1addF2(CanvasState, Figure, Figure): void
+  + values(): Action[]
+  + redo(CanvasState, Figure, Figure): void
+}
+class AppLauncher {
+  + AppLauncher():
+  + main(String[]): void
+  + start(Stage): void
+}
+class AppMenuBar {
+  + AppMenuBar():
+}
+class CanvasState {
+  + CanvasState():
+  - list: List<Figure>
+  - copyFormat: Format
+  - done: LinkedList<Change>
+  - undone: LinkedList<Change>
+  - selectedFigure: Figure
+  - startPoint: Point
+  - toCopyFigure: Figure
+  + setToCopyFigure(Figure): void
+  + cutFigure(): void
+  + mouseDraggedonCanvas(MouseEvent): void
+  + addFigure(Figure): void
+  + updateSelectedFormat(Action, Color, Color, double): void
+  + addDone(Change): void
+  + getUndoMessage(): String
+  + toUndoAvailable(): int
+  + copyFormatFigure(): void
+  + pasteFigure(): void
+  + removeVisual(Figure): void
+  + figureBelongs(Figure, Point): boolean
+  + restartStartPoint(): void
+  + addNewFigure(MouseEvent, SpecialButton[], Color, Color, double): void
+  + getSelectedFigure(): Figure
+  + addVisual(Figure): void
+  + getToCopyFigure(): Figure
+  + redo(): void
+  + restartSelectedFigure(): void
+  + figures(): Iterable<Figure>
+  + addNewFigure(Figure): void
+  + restartCopyFormat(): void
+  + deleteFigure(Figure): void
+  + undo(): void
+  + toRedoAvailable(): int
+  + selectFigure(Figure): void
+  + addUndone(Figure, Figure, Action): void
+  - getLastDone(): Change?
+  + removeFigure(Figure): void
+  + updateUndoPane(UndoPane): void
+  + deleteFigure(): void
+  + copyFigure(): void
+  - CopyFunction(Action): void
+  + getRedoMessage(): String
+  + moveFigure(double, double): void
+  - getLastUndone(): Change?
+  + restartUndone(): void
+  + setSelectedFigure(Figure): void
+  + addUndone(Change): void
+  + addDone(Figure, Figure, Action): void
+  + restartToCopyFigure(): void
+  + setStartPoint(Point): void
+}
+class Change {
+  + Change(Figure, Figure, Action):
+  - oldFigure: Figure
+  - newFigure: Figure
+  - action: Action
+  + redo(CanvasState): void
+  + undo(CanvasState): void
+  + toString(): String
+}
+class Circle extends Ellipse{
+  + Circle(Point, double, Format, int):
+  + Circle(Point, double, Format):
+  + getCopy(): Figure
+  + getName(): String
+  + getRadius(): Double
+  + toString(): String
+  + centerFigure(): Figure
+}
+class CircleButton extends SpecialButton{
+  + CircleButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+class CutCopyPastePane {
+  + CutCopyPastePane():
+  - pasteIconPath: String
+  - toolsArr: Button[]
+  - cutIcon: Image
+  - copyIconPath: String
+  - cutIconPath: String
+  - copyButton: Button
+  - copyIcon: Image
+  - cutButton: Button
+  - pasteIcon: Image
+  - pasteButton: Button
+  + getCopyButton(): Button
+  + getCutButton(): Button
+  + getPasteButton(): Button
+}
+class Ellipse extends Figure {
+  + Ellipse(Point, double, double, Format, int):
+  + Ellipse(Point, double, double, Format):
+  - centerPoint: Point
+  - sMayorAxis: Double
+  - sMinorAxis: Double
+  + getCopy(): Figure
+  + toString(): String
+  + moveX(double): void
+  + centerFigure(): Figure
+  + redrawCanvas(GraphicsContext): void
+  + getCenterPoint(): Point
+  + moveY(double): void
+  + hashCode(): int
+  + getsMayorAxis(): double
+  + getsMinorAxis(): double
+  - defineEllipse(Point, double, double): void
+  + equals(Object): boolean
+  + figureBelongs(Point): boolean
+  + getName(): String
+}
+class EllipseButton extends SpecialButton{
+  + EllipseButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+abstract class Figure {
+  + Figure(Format):
+  + Figure(Format, int):
+  - figureID: Integer
+  - ID: int
+  - format: Format
+  + figureBelongs(Point): boolean
+  + getName(): String
+  + setFormat(Format): void
+  + getCopy(): Figure
+  + centerFigure(): Figure
+  + setFillColor(Color): void
+  + getFigureID(): Integer
+  + moveX(double): void
+  + getFormat(): Format
+  + moveY(double): void
+  + setBorderWidth(double): void
+  + redrawCanvas(GraphicsContext): void
+  + setBorderColor(Color): void
+  - updateID(): void
+}
+class Format {
+  + Format(Color, Color, double):
+  + Format(Format):
+  - fillColor: Color
+  - borderColor: Color
+  - borderWidth: Double
+  + getBorderColor(): Color
+  + hashCode(): int
+  + setFillColor(Color): void
+  + toString(): String
+  + setBorderColor(Color): void
+  + setBorderWidth(double): void
+  + getFillColor(): Color
+  + equals(Object): boolean
+  + getBorderWidth(): double
+}
+class MainFrame {
+  + MainFrame(CanvasState):
+}
+class PaintPane {
+  + PaintPane(CanvasState, StatusPane, CutCopyPastePane, UndoPane):
+  - ellipseButton: SpecialButton
+  - borderColorPicker: ColorPicker
+  - canvas: Canvas
+  - circleButton: SpecialButton
+  - coloredText: Label
+  - fillLabel: Label
+  - gc: GraphicsContext
+  - slider: Slider
+  - undoPane: UndoPane
+  - copyFormatButton: ToggleButton
+  - deleteButton: ToggleButton
+  - rectangleButton: SpecialButton
+  - squareButton: SpecialButton
+  - selectionButton: ToggleButton
+  - cutCopyPastePane: CutCopyPastePane
+  - sliderLabel: Label
+  - statusPane: StatusPane
+  - fillColorPicker: ColorPicker
+  - canvasState: CanvasState
+  - mouseClickonCanvas(MouseEvent): void
+  - statusLabelFigureInfo(boolean, StringBuilder): void
+  ~ redrawCanvas(): void
+  - mouseMovedonCanvas(MouseEvent): void
+}
+class Point {
+  + Point(double, double):
+  + Point(Point):
+  - x: Double
+  - y: Double
+  + moveX(double): void
+  + getX(): double
+  + equals(Object): boolean
+  + getY(): double
+  + toString(): String
+  + hashCode(): int
+  + moveY(double): void
+}
+class Rectangle extends Figure {
+  + Rectangle(Point, Point, Format):
+  + Rectangle(Point, Point, Format, int):
+  - topLeft: Point
+  - bottomRight: Point
+  + getTopLeft(): Point
+  + getBottomRight(): Point
+  + getName(): String
+  + hashCode(): int
+  + toString(): String
+  + moveY(double): void
+  - defineRectangle(Point, Point): void
+  + getCopy(): Figure
+  + moveX(double): void
+  + redrawCanvas(GraphicsContext): void
+  + equals(Object): boolean
+  + figureBelongs(Point): boolean
+  + centerFigure(): Figure
+}
+class RectangleButton extends SpecialButton{
+  + RectangleButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+abstract class SpecialButton {
+  + SpecialButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+class Square extends Rectangle{
+  + Square(Point, double, Format, int):
+  + Square(Point, double, Format):
+  - size: Double
+  + getCopy(): Figure
+  + toString(): String
+  + getName(): String
+  + centerFigure(): Figure
+}
+class SquareButton extends SpecialButton{
+  + SquareButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+class StatusPane {
+  + StatusPane():
+  - statusLabel: Label
+  + updateStatus(String): void
+}
+class UndoPane {
+  + UndoPane():
+  - undoLabel: Label
+  - undoButton: Button
+  - undoIconPath: String
+  - redoIconPath: String
+  - redoButton: Button
+  - redoMessageLabel: Label
+  - redoMessage: String
+  - redoLabel: Label
+  - undoMessageLabel: Label
+  - undoIcon: Image
+  - redoIcon: Image
+  - redoTimes: Integer
+  - undoTimes: Integer
+  - undoMessage: String
+  + getUndoButton(): Button
+  + getRedoButton(): Button
+  + updateUndoPane(String, Integer, String, Integer): void
+  - setLabelVisual(Label, double, double, Pos): void
+}
+
+Rectangle *-- Point
+Ellipse *-- Point
+Figure *-- Format
+Change *-- Figure
+Change *-- Action
+PaintPane *-- SpecialButton
+PaintPane *-- UndoPane
+PaintPane *-- CutCopyPastePane
+PaintPane *-- StatusPane
+PaintPane *-- CanvasState
+CanvasState *-- Point
+CanvasState *-- Figure
+
+@enduml
+
+
+
