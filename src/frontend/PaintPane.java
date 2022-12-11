@@ -90,11 +90,11 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseMoved(event -> {
-			mouseMovedonCanvas(event);
+			mouseMovedOnCanvas(event);
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			mouseClickonCanvas(event,clickableButtons);
+			mouseClickOnCanvas(event,clickableButtons);
 		});
 
 		canvas.setOnMouseDragged(event -> {
@@ -191,7 +191,7 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
-	private void mouseMovedonCanvas(MouseEvent event){
+	private void mouseMovedOnCanvas(MouseEvent event){
 		Point eventPoint = new Point(event.getX(), event.getY());
 		boolean found = false;
 		StringBuilder label = new StringBuilder();
@@ -207,7 +207,7 @@ public class PaintPane extends BorderPane {
 			statusPane.updateStatus(eventPoint.toString());
 		}
 	}
-	private void mouseClickonCanvas(MouseEvent event,ClickableButton[] clickableButtons){
+	private void mouseClickOnCanvas(MouseEvent event,ClickableButton[] clickableButtons){
 		for(ClickableButton active: clickableButtons){
 			if( active.isSelected()){
 				Point eventPoint = new Point(event.getX(), event.getY());
@@ -224,35 +224,6 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		}
-		/*
-		if(selectionButton.isSelected()) {
-			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean found = false;
-			StringBuilder label = new StringBuilder("Se seleccionó: ");
-			for (Figure figure : canvasState.figures()) {
-				if(canvasState.figureBelongs(figure, eventPoint)) {
-					found = true;
-					if(figure != null){
-						canvasState.setSelectedFigure(figure);}
-					label.append(figure);
-				}
-			}
-			statusLabelFigureInfo(found,label);
-			redrawCanvas();
-		} else if (copyFormatButton.isSelected()){
-			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean found = false;
-			StringBuilder label = new StringBuilder("Se seleccionó: ");
-			for (Figure figure : canvasState.figures()) {
-				if(canvasState.figureBelongs(figure, eventPoint)) {
-					found = true;
-					canvasState.pasteFormat(figure);
-					label.append(figure);
-				}
-			}
-			statusLabelFigureInfo(found,label);
-			redrawCanvas();
-		}*/
 	}
 
 	private void statusLabelFigureInfo(boolean found,StringBuilder label){

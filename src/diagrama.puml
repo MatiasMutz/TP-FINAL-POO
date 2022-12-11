@@ -206,10 +206,10 @@ class PaintPane {
   - statusPane: StatusPane
   - fillColorPicker: ColorPicker
   - canvasState: CanvasState
-  - mouseClickonCanvas(MouseEvent): void
+  - mouseClickOnCanvas(MouseEvent, ClickableButton[]): void
   - statusLabelFigureInfo(boolean, StringBuilder): void
   ~ redrawCanvas(): void
-  - mouseMovedonCanvas(MouseEvent): void
+  - mouseMovedOnCanvas(MouseEvent): void
 }
 class Point {
   + Point(double, double):
@@ -277,6 +277,23 @@ class StatusPane {
   - statusLabel: Label
   + updateStatus(String): void
 }
+
+abstract class ClickableButton{
+    +ClickableButton(String)
+    +actOnClick(CanvasState, Figure): void
+}
+
+class CopyFormatButton extends ClickableButton{
+    +CopyFormatButton(String)
+    +actOnClick(CanvasState, Figure): void
+}
+
+class SelectionButton extends ClickableButton{
+    +SelectionButton(String)
+    +actOnClick(CanvasState, Figure): void
+}
+
+
 class UndoPane {
   + UndoPane():
   - undoLabel: Label
@@ -320,7 +337,7 @@ note bottom of UndoPane: This class <b>extends</b> from <b>BorderPane</b>
 note top of PaintPane: This class <b>extends</b> from <b>BorderPane</b>
 note bottom of StatusPane: This class <b>extends</b> from <b>BorderPane</b>
 note left of MainFrame: This class <b>extends</b> from <b>VBox</b>
-
+note left of ClickableButton: this class <b>extends</b> from <b>ToggleButton</b>
 
 @enduml
 
