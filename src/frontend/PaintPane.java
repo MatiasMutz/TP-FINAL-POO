@@ -86,7 +86,6 @@ public class PaintPane extends BorderPane {
 			canvasState.addNewFigure(event, specialArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
 			canvasState.restartSelectedFigure();
 			redrawCanvas();
-
 		});
 
 		canvas.setOnMouseMoved(event -> {
