@@ -169,16 +169,14 @@ public class CanvasState {
     }
 
     public boolean figureBelongs(Figure figure, Point eventPoint) {
-        boolean found = figure.figureBelongs(eventPoint);
-        return found;
+         return figure.figureBelongs(eventPoint);
     }
 
     public void addNewFigure(MouseEvent event, SpecialButton[] toolsArr, Color fill, Color border, double sliderValue){
         Point endPoint = new Point(event.getX(), event.getY());
         if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-            return ;
+            return;
         }
-        Figure newFigure = null;
         for(SpecialButton button: toolsArr){
             if(button.isSelected()){
                 addNewFigure(button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue)));
@@ -222,6 +220,7 @@ public class CanvasState {
     public void copyFormatFigure(){
         if(selectedFigure != null){
             copyFormat = new Format(selectedFigure.getFormat());
+            restartUndone();
         }
     }
 

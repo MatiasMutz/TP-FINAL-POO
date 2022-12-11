@@ -84,6 +84,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseReleased(event -> {
 			canvasState.addNewFigure(event, specialArr, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
+			canvasState.restartSelectedFigure();
 			redrawCanvas();
 
 		});
@@ -110,6 +111,11 @@ public class PaintPane extends BorderPane {
 
 		copyFormatButton.setOnAction(event->{
 			canvasState.copyFormatFigure();
+			canvasState.restartSelectedFigure();
+			redrawCanvas();
+			selectionButton.fire();
+			redrawCanvas();
+
 		});
 
 		//Cambia el formato si
@@ -138,6 +144,7 @@ public class PaintPane extends BorderPane {
 
 		pasteButton.setOnAction(event -> {
 			canvasState.pasteFigure();
+			canvasState.restartSelectedFigure();
 			redrawCanvas();
 		});
 
@@ -154,11 +161,13 @@ public class PaintPane extends BorderPane {
 
 		undoButton.setOnAction(event -> {
 			canvasState.undo();
+			canvasState.restartSelectedFigure();
 			redrawCanvas();
 		});
 
 		redoButton.setOnAction(event -> {
 			canvasState.redo();
+			canvasState.restartSelectedFigure();
 			redrawCanvas();
 		});
 
