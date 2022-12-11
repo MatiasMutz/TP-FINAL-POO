@@ -18,8 +18,8 @@ public enum Action {
     },
     DELETE("Borrar "){
 
-        @Override //Yo habia borrado, lee hice un undo entonces volvio a estar lo que sria oldFigure,
-        // entonce ahora quiero que se vuelva a borrar oldFigure
+        @Override //Yo habia borrado, le hice un undo. entonces volvio a estar lo que seria oldFigure,
+        // redo ahora quiero que se vuelva a borrar oldFigure
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
             canvasState.removeVisual(oldFigure);
         }
