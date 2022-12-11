@@ -174,7 +174,7 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	void redrawCanvas() {
+	private void redrawCanvas() {
 		canvasState.updateUndoPane(undoPane);
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {

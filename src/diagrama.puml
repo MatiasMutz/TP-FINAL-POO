@@ -206,7 +206,7 @@ class PaintPane {
   - canvasState: CanvasState
   - mouseClickOnCanvas(MouseEvent, ClickableButton[]): void
   - statusLabelFigureInfo(boolean, StringBuilder): void
-  ~ redrawCanvas(): void
+  - redrawCanvas(): void
   - mouseMovedOnCanvas(MouseEvent): void
 }
 class Point {
