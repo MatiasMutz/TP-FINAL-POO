@@ -148,6 +148,8 @@ public class PaintPane extends BorderPane {
 
 		setOnKeyPressed(event -> {
 			if(event.isControlDown()){
+				selectionButton.setSelected(false);
+				copyFormatButton.setSelected(false);
 				if(event.getCode() == KeyCode.X)
 					cutButton.fire();
 				else if(event.getCode() == KeyCode.C)

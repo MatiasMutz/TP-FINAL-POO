@@ -12,6 +12,7 @@ public class SelectionButton extends ClickableButton {
     public void actOnClick(CanvasState canvasState, Figure figure){
         canvasState.selectFigure(figure);
         canvasState.restartCopyFormat();
+
     }
 
 }

@@ -12,5 +12,6 @@ public class CopyFormatButton extends ClickableButton {
 
     public void actOnClick(CanvasState canvasState, Figure figure){
         canvasState.pasteFormat(figure);
+        setSelected(false);
     }
 }
