@@ -117,10 +117,7 @@ public class CanvasState {
         undone=new LinkedList<>();
     }
 
-    //Devuelve la figura que esta para ser copiada
-    public Figure getToCopyFigure() {
-        return toCopyFigure;
-    }
+
     //Setea la figura que esta para ser copiada
     public void setToCopyFigure(Figure figure){
         toCopyFigure = figure;
@@ -174,7 +171,6 @@ public class CanvasState {
         if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
             return ;
         }
-        Figure newFigure = null;
         for(SpecialButton button: toolsArr){
             if(button.isSelected()){
                 addNewFigure(button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue)));
@@ -272,7 +268,4 @@ public class CanvasState {
         return selectedFigure;
     }
 
-    public void setSelectedFigure(Figure selectedFigure) {
-        this.selectedFigure = selectedFigure;
-    }
 }

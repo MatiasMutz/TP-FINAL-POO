@@ -116,7 +116,6 @@ public class PaintPane extends BorderPane {
 
 		});
 
-		//Cambia el formato si
 		borderColorPicker.setOnAction(event-> {
 			canvasState.updateSelectedFormat(Action.CHANGEBORDERCOLOR, fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue());
 			redrawCanvas();
