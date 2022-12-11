@@ -58,7 +58,6 @@ class CanvasState {
   + addNewFigure(MouseEvent, SpecialButton[], Color, Color, double): void
   + getSelectedFigure(): Figure
   + addVisual(Figure): void
-  + getToCopyFigure(): Figure
   + redo(): void
   + restartSelectedFigure(): void
   + figures(): Iterable<Figure>
@@ -68,6 +67,7 @@ class CanvasState {
   + undo(): void
   + toRedoAvailable(): int
   + selectFigure(Figure): void
+  +pasteFormat(Figure): void
   + addUndone(Figure, Figure, Action): void
   - getLastDone(): Change?
   + removeFigure(Figure): void
@@ -79,7 +79,6 @@ class CanvasState {
   + moveFigure(double, double): void
   - getLastUndone(): Change?
   + restartUndone(): void
-  + setSelectedFigure(Figure): void
   + addUndone(Change): void
   + addDone(Figure, Figure, Action): void
   + restartToCopyFigure(): void
