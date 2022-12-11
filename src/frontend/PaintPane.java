@@ -149,12 +149,7 @@ public class PaintPane extends BorderPane {
 			if(event.isControlDown()){
 				selectionButton.setSelected(false);
 				copyFormatButton.setSelected(false);
-				if(event.getCode() == KeyCode.X)
-					cutButton.fire();
-				else if(event.getCode() == KeyCode.C)
-					copyButton.fire();
-				else if(event.getCode() == KeyCode.V)
-					pasteButton.fire();
+				cutCopyPastePane.controlShortcuts(event);
 			}
 		});
 

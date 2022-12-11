@@ -6,6 +6,8 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -40,7 +42,22 @@ public class CutCopyPastePane extends BorderPane {
         buttonsBox.setStyle("-fx-background-color: #999");
         buttonsBox.setPrefWidth(100);
 
+        setOnKeyPressed(event -> {
+            if(event.isControlDown()){
+                controlShortcuts(event);
+            }
+        });
+
         setCenter(buttonsBox);
+    }
+
+    public void controlShortcuts(KeyEvent event){
+        if(event.getCode() == KeyCode.X)
+            cutButton.fire();
+        else if(event.getCode() == KeyCode.C)
+            copyButton.fire();
+        else if(event.getCode() == KeyCode.V)
+            pasteButton.fire();
     }
 
     public Button getCutButton(){

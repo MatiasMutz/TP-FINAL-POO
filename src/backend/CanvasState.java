@@ -153,7 +153,9 @@ public class CanvasState {
     }
 
     public void pasteFigure(){
+        System.out.println("HOLA");
         if(toCopyFigure!=null){
+            System.out.println("HOLA2");
             Figure figure = toCopyFigure.centerFigure();
             addVisual(figure);
             addDone(null,figure,Action.PASTEFIGURE);
