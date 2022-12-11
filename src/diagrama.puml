@@ -1,5 +1,9 @@
 @startuml diagrama
 
+skinparam class{
+BackgroundColor LightYellow
+}
+
 enum Action{
   - Action(String):
   + CHANGEBORDER
@@ -20,6 +24,7 @@ enum Action{
   + values(): Action[]
   + redo(CanvasState, Figure, Figure): void
 }
+
 class AppLauncher {
   + AppLauncher():
   + main(String[]): void
@@ -139,10 +144,7 @@ class Ellipse extends Figure {
   + figureBelongs(Point): boolean
   + getName(): String
 }
-class EllipseButton extends SpecialButton{
-  + EllipseButton(String):
-  + newFigure(Point, Point, Format): Figure
-}
+
 abstract class Figure {
   + Figure(Format):
   + Figure(Format, int):
@@ -245,6 +247,17 @@ class RectangleButton extends SpecialButton{
   + RectangleButton(String):
   + newFigure(Point, Point, Format): Figure
 }
+
+class EllipseButton extends SpecialButton{
+  + EllipseButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+
+class SquareButton extends SpecialButton{
+  + SquareButton(String):
+  + newFigure(Point, Point, Format): Figure
+}
+
 abstract class SpecialButton {
   + SpecialButton(String):
   + newFigure(Point, Point, Format): Figure
@@ -258,10 +271,7 @@ class Square extends Rectangle{
   + getName(): String
   + centerFigure(): Figure
 }
-class SquareButton extends SpecialButton{
-  + SquareButton(String):
-  + newFigure(Point, Point, Format): Figure
-}
+
 class StatusPane {
   + StatusPane():
   - statusLabel: Label
@@ -301,6 +311,16 @@ PaintPane *-- StatusPane
 PaintPane *-- CanvasState
 CanvasState *-- Point
 CanvasState *-- Figure
+
+note left of AppLauncher: This class <b>extends</b> from <b>Application</b>
+note left of AppMenuBar: This class <b>extends</b> from <b>MenuBar</b>
+note left of SpecialButton: This class <b>extends</b> from <b>ToggleButton</b>
+note top of CutCopyPastePane: This class <b>extends</b> from <b>BorderPane</b>
+note bottom of UndoPane: This class <b>extends</b> from <b>BorderPane</b>
+note top of PaintPane: This class <b>extends</b> from <b>BorderPane</b>
+note bottom of StatusPane: This class <b>extends</b> from <b>BorderPane</b>
+note left of MainFrame: This class <b>extends</b> from <b>VBox</b>
+
 
 @enduml
 
