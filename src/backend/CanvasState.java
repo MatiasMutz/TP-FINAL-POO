@@ -189,14 +189,12 @@ public class CanvasState {
         }
     }
     public void pasteFormat(Figure figure){
-        if(figure != null){
+        if(figure != null && copyFormat!=null){
             selectedFigure = figure;
-            if(copyFormat!=null){
                 Figure oldFigure=selectedFigure.getCopy();
                 selectedFigure.setFormat(copyFormat);
                 addDone(oldFigure,selectedFigure.getCopy(),Action.COPYFORMAT);
                 restartCopyFormat();
-            }
         }
     }
 
