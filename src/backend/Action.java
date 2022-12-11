@@ -85,23 +85,23 @@ public enum Action {
     CUTFIGURE("Cortar "){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.removeVisual(oldFigure);
-            canvasState.setToCopyFigure(oldFigure);
+            canvasState.removeVisual(newFigure);
+            canvasState.setToCopyFigure(newFigure);
         }
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.addVisual(oldFigure);
-            canvasState.restartToCopyFigure();
+            canvasState.addVisual(newFigure);
+            canvasState.setToCopyFigure(oldFigure);
         }
     },
     COPYFIGURE("Copiar " ){
         @Override
         public void redo(CanvasState canvasState, Figure oldFigure, Figure newFigure){
-            canvasState.setToCopyFigure(oldFigure);
+            canvasState.setToCopyFigure(newFigure);
         }
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
-            canvasState.restartToCopyFigure();
+            canvasState.setToCopyFigure(oldFigure);
         }
     },
     PASTEFIGURE("Pegar "){
@@ -112,6 +112,7 @@ public enum Action {
         @Override
         public void undo(CanvasState canvasState, Figure oldFigure, Figure newFigure) {
             canvasState.removeVisual(newFigure);
+            canvasState.setToCopyFigure(newFigure);
         }
     };
 

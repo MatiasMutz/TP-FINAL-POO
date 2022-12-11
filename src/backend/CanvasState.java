@@ -8,6 +8,7 @@ import frontend.UndoPane;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -169,14 +170,16 @@ public class CanvasState {
     }
 
     public boolean figureBelongs(Figure figure, Point eventPoint) {
-         return figure.figureBelongs(eventPoint);
+        boolean found = figure.figureBelongs(eventPoint);
+        return found;
     }
 
     public void addNewFigure(MouseEvent event, SpecialButton[] toolsArr, Color fill, Color border, double sliderValue){
         Point endPoint = new Point(event.getX(), event.getY());
         if(startPoint == null || endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-            return;
+            return ;
         }
+        Figure newFigure = null;
         for(SpecialButton button: toolsArr){
             if(button.isSelected()){
                 addNewFigure(button.newFigure(startPoint,endPoint,new Format(fill, border, sliderValue)));
@@ -185,8 +188,12 @@ public class CanvasState {
             }
         }
     }
-
     public void selectFigure(Figure figure){
+        if(figure!=null){
+            selectedFigure=figure;
+        }
+    }
+    public void pasteFormat(Figure figure){
         if(figure != null){
             selectedFigure = figure;
             if(copyFormat!=null){
@@ -220,23 +227,25 @@ public class CanvasState {
     public void copyFormatFigure(){
         if(selectedFigure != null){
             copyFormat = new Format(selectedFigure.getFormat());
-            restartUndone();
         }
     }
 
     public void copyFigure(){
         CopyFunction(Action.COPYFIGURE);
+        restartUndone();
     }
 
     public void cutFigure(){
         CopyFunction(Action.CUTFIGURE);
+        restartUndone();
         removeVisual(selectedFigure);
     }
 
     private void CopyFunction(Action action){
         if(selectedFigure != null){
+            Figure oldToCopyFigure=(toCopyFigure!=null)?(toCopyFigure.getCopy()):null;
             setToCopyFigure(selectedFigure.getCopy());
-            addDone(selectedFigure.getCopy(),null,action);
+            addDone(oldToCopyFigure,selectedFigure.getCopy(),action);
         }
     }
 
@@ -248,7 +257,6 @@ public class CanvasState {
         if(selectedFigure!=null){
             Figure oldFigure=selectedFigure.getCopy();
             action.updateSelectedFormat(selectedFigure,new Format(fill, border, sliderValue));
-            //selectedFigure.setFormat(new Format(fillColorPicker.getValue(), borderColorPicker.getValue(), slider.getValue()));
             addDone(oldFigure,selectedFigure.getCopy(),action);
             restartUndone();
         }

@@ -30,14 +30,14 @@ public class PaintPane extends BorderPane {
 	private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	// Botones Barra Izquierda
-	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private final SelectionButton selectionButton = new SelectionButton("Seleccionar");
 	private final SpecialButton rectangleButton = new RectangleButton("Rectángulo");
 	private final SpecialButton circleButton = new CircleButton("Círculo");
 	private final SpecialButton squareButton = new SquareButton("Cuadrado");
 	private final SpecialButton ellipseButton = new EllipseButton("Elipse");
 	private final ToggleButton deleteButton = new ToggleButton("Borrar");
 
-	private final ToggleButton copyFormatButton = new ToggleButton("Cop. Form.");
+	private final CopyFormatButton copyFormatButton = new CopyFormatButton("Cop. Form.");
 
 	private final Label sliderLabel = new Label("Borde");
 	private final Label fillLabel = new Label("Relleno");
@@ -61,6 +61,7 @@ public class PaintPane extends BorderPane {
 
 		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, squareButton, ellipseButton, deleteButton, copyFormatButton};
 		SpecialButton[] specialArr = {rectangleButton, circleButton, squareButton, ellipseButton};
+		ClickableButton[] clickableButtons={selectionButton,copyFormatButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -93,7 +94,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			mouseClickonCanvas(event);
+			mouseClickonCanvas(event,clickableButtons);
 		});
 
 		canvas.setOnMouseDragged(event -> {
@@ -111,8 +112,6 @@ public class PaintPane extends BorderPane {
 		copyFormatButton.setOnAction(event->{
 			canvasState.copyFormatFigure();
 			canvasState.restartSelectedFigure();
-			redrawCanvas();
-			selectionButton.fire();
 			redrawCanvas();
 
 		});
@@ -206,7 +205,24 @@ public class PaintPane extends BorderPane {
 			statusPane.updateStatus(eventPoint.toString());
 		}
 	}
-	private void mouseClickonCanvas(MouseEvent event){
+	private void mouseClickonCanvas(MouseEvent event,ClickableButton[] clickableButtons){
+		for(ClickableButton active: clickableButtons){
+			if( active.isSelected()){
+				Point eventPoint = new Point(event.getX(), event.getY());
+				boolean found = false;
+				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				for (Figure figure : canvasState.figures()) {
+					if(canvasState.figureBelongs(figure, eventPoint)) {
+						found = true;
+						active.actOnClick(canvasState,figure);
+						label.append(figure);
+					}
+				}
+				statusLabelFigureInfo(found,label);
+				redrawCanvas();
+			}
+		}
+		/*
 		if(selectionButton.isSelected()) {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
@@ -214,14 +230,29 @@ public class PaintPane extends BorderPane {
 			for (Figure figure : canvasState.figures()) {
 				if(canvasState.figureBelongs(figure, eventPoint)) {
 					found = true;
-					canvasState.selectFigure(figure);
+					if(figure != null){
+						canvasState.setSelectedFigure(figure);}
 					label.append(figure);
 				}
 			}
 			statusLabelFigureInfo(found,label);
 			redrawCanvas();
-		}
+		} else if (copyFormatButton.isSelected()){
+			Point eventPoint = new Point(event.getX(), event.getY());
+			boolean found = false;
+			StringBuilder label = new StringBuilder("Se seleccionó: ");
+			for (Figure figure : canvasState.figures()) {
+				if(canvasState.figureBelongs(figure, eventPoint)) {
+					found = true;
+					canvasState.pasteFormat(figure);
+					label.append(figure);
+				}
+			}
+			statusLabelFigureInfo(found,label);
+			redrawCanvas();
+		}*/
 	}
+
 	private void statusLabelFigureInfo(boolean found,StringBuilder label){
 		if (found) {
 			statusPane.updateStatus(label.toString());

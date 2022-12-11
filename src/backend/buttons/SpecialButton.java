@@ -1,5 +1,6 @@
 package backend.buttons;
 
+import backend.CanvasState;
 import backend.model.Figure;
 import backend.model.Format;
 import backend.model.Point;
@@ -11,4 +12,5 @@ public abstract class SpecialButton extends ToggleButton {
         super(info);
     }
     public abstract Figure newFigure(Point startPoint, Point endPoint, Format format);
+
 }
